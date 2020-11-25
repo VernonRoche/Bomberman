@@ -53,6 +53,8 @@
 
 
 !Interface:
+-Afficher les boites, bonus/malus et monstres
+
 -Afficher les bonus
 
 -Mettre a jour quand un changement se fait sur les points de vie ou les bonus
@@ -72,9 +74,29 @@
 
 @EN COURS@
 
+ALEX:
+!Mouvement:
+-Bloquer le joueur
+---ne pas sortir de la map
+---ne pas rentrer dans les cailloux,boites,portes fermees et les arbres
+
+-Gagner quand il marche sur la princesse
+
+-Prendre des degats quand il marche sur un monstre
 
 
+SYLVAIN:
+!Gameplay:
+-Points de vie
+---Perdre quand ils sont a 0
+---Enlever 1 quand il tombe sur un monstre
 
+
+-Bonus
+---Ramasser les bonus et les enlever de la carte
+
+!Interface:
+-Afficher les boites, bonus/malus et monstres
 
 
 
