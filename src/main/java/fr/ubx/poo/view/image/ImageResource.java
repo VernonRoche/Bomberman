@@ -1,7 +1,5 @@
 package fr.ubx.poo.view.image;
 
-import javafx.scene.image.Image;
-
 public enum ImageResource {
     BANNER_BOMB ("banner_bomb.png"),
     BANNER_RANGE ("banner_range.png"),
@@ -23,6 +21,24 @@ public enum ImageResource {
     PLAYER_UP("player_up.png"),
     STONE("stone.png"),
     TREE("tree.png"),
+
+    BOMB_RANGE_DEC("bonus_bomb_range_dec.png"),
+    BOMB_RANGE_INC("bonus_bomb_range_inc.png"),
+    BOMB_NB_DEC("bonus_bomb_nb_dec.png"),
+    BOMB_NB_INC("bonus_bomb_nb_inc.png"),
+    BOX("box.png"),
+    BOMB1("bomb1.png"),
+    BOMB2("bomb2.png"),
+    BOMB3("bomb3.png"),
+    BOMB4("bomb4.png"),
+    EXPLOSION("explosion.png"),
+    PRINCESS("bomberwoman.png"),
+    DOOR_CLOSED("door_closed.png"),
+    DOOR_OPENED("door_opened.png"),
+    MONSTER_DOWN("monster_down.png"),
+    MONSTER_LEFT("monster_left.png"),
+    MONSTER_RIGHT("monster_right.png"),
+    MONSTER_UP("monster_up.png"),
     ;
 
     private final String FileName;

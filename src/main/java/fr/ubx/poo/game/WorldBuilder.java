@@ -1,8 +1,6 @@
 package fr.ubx.poo.game;
 
-import fr.ubx.poo.model.decor.Decor;
-import fr.ubx.poo.model.decor.Stone;
-import fr.ubx.poo.model.decor.Tree;
+import fr.ubx.poo.model.decor.*;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -32,6 +30,24 @@ public class WorldBuilder {
                 return new Stone();
             case Tree:
                 return new Tree();
+
+            case Heart:
+                return new Heart();
+            case BombRangeDec:
+                return new BombRangeDec();
+            case BombRangeInc:
+                return new BombRangeInc();
+            case BombNumberDec:
+                return new BombNumberDec();
+            case BombNumberInc:
+                return new BombNumberInc();
+            case Box:
+                return new Box();
+            case Princess:
+                return new Princess();
+            case Key:
+                return new Key();
+
             default:
                 return null;
         }
