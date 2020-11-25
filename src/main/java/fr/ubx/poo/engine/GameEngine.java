@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-//hellocommit
+
 public final class GameEngine {
 
     private static AnimationTimer gameLoop;
