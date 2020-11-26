@@ -21,8 +21,7 @@
 ---Enlever les bonus/malus
 
 
--Implementer les cles
----Appuyer sur ENTER pour ouvrir une porte
+
 
 
 -Implementer les caisses
@@ -59,7 +58,8 @@
 
 ALEX:
 
-
+-Implementer les cles
+---Appuyer sur ENTER pour ouvrir une porte
 
 SYLVAIN:
 !Gameplay:
