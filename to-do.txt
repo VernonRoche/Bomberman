@@ -58,14 +58,7 @@
 @EN COURS@
 
 ALEX:
-!Mouvement:
--Bloquer le joueur
----ne pas sortir de la map
----ne pas rentrer dans les cailloux,boites,portes fermees et les arbres
 
--Gagner quand il marche sur la princesse
-
--Prendre des degats quand il marche sur un monstre
 
 
 SYLVAIN:
@@ -84,3 +77,11 @@ SYLVAIN:
 
 
 @FINI@
+
+
+
+
+
+
+@A REVOIR@
+---ne pas sortir de la map

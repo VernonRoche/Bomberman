@@ -6,7 +6,9 @@ package fr.ubx.poo.model.go.character;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Position;
+import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.Movable;
+import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.go.GameObject;
 import fr.ubx.poo.game.Game;
 
@@ -41,12 +43,36 @@ public class Player extends GameObject implements Movable {
 
     @Override
     public boolean canMove(Direction direction) {
+        Position nextPos=direction.nextPosition(getPosition());
+        World map=this.game.getWorld();
+        if (nextPos.x<0 || nextPos.y<0 || nextPos.x>11 || nextPos.y>12){
+            return false;
+        }//dehors de la map, il faut changer les conditions des 2 dernieres valeurs car c'est pas propre
+
+        Decor tmp=map.get(nextPos);
+        if (tmp==null){
+            return true;
+        }//on marche sur le sol
+        String item=tmp.toString();
+        System.out.println(item);
+        if (item=="Stone" || item=="Tree" || item=="Box"){
+            return false;
+        }
+
+        //voir si on est sur la princesse
+        if (item=="Princess"){
+            winner=true;
+        }
+        if (item=="Monster"){
+            lives=lives-1;
+        }
         return true;
     }
 
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
         setPosition(nextPos);
+
     }
 
     public void update(long now) {
