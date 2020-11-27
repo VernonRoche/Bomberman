@@ -8,7 +8,7 @@ import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.Movable;
-import fr.ubx.poo.model.decor.Decor;
+import fr.ubx.poo.model.decor.*;
 import fr.ubx.poo.model.go.GameObject;
 import fr.ubx.poo.game.Game;
 
@@ -44,30 +44,19 @@ public class Player extends GameObject implements Movable {
     @Override
     public boolean canMove(Direction direction) {
         Position nextPos=direction.nextPosition(getPosition());
-        World map=this.game.getWorld();
-        //dehors de la map, il faut changer les conditions des 2 dernieres valeurs car c'est pas propre
-
-        Decor tmp=map.get(nextPos);
-        if (tmp==null){
-            return false;
-        }//on marche sur le sol
-        String item=tmp.toString();
-        System.out.println(item);
-        if (item=="Stone" || item=="Tree" || item=="Box"){
+        if (!nextPos.inside(game.getWorld().dimension)){
             return false;
         }
-        if (item=="Floor"){
-            return true;
-        }
 
+        Decor decor=game.getWorld().get(nextPos);
+        if (decor instanceof Stone || decor instanceof Box || decor instanceof Tree){
+            return false;
+        }
         //voir si on est sur la princesse
-        if (item=="Princess"){
+        if (decor instanceof Princess){
             winner=true;
         }
-        if (item=="Monster"){
-            lives=lives-1;
-            return true;
-        }
+
         return true;
     }
 
