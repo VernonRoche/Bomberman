@@ -45,18 +45,19 @@ public class Player extends GameObject implements Movable {
     public boolean canMove(Direction direction) {
         Position nextPos=direction.nextPosition(getPosition());
         World map=this.game.getWorld();
-        if (nextPos.x<0 || nextPos.y<0 || nextPos.x>11 || nextPos.y>12){
-            return false;
-        }//dehors de la map, il faut changer les conditions des 2 dernieres valeurs car c'est pas propre
+        //dehors de la map, il faut changer les conditions des 2 dernieres valeurs car c'est pas propre
 
         Decor tmp=map.get(nextPos);
         if (tmp==null){
-            return true;
+            return false;
         }//on marche sur le sol
         String item=tmp.toString();
         System.out.println(item);
         if (item=="Stone" || item=="Tree" || item=="Box"){
             return false;
+        }
+        if (item=="Floor"){
+            return true;
         }
 
         //voir si on est sur la princesse
@@ -65,6 +66,7 @@ public class Player extends GameObject implements Movable {
         }
         if (item=="Monster"){
             lives=lives-1;
+            return true;
         }
         return true;
     }

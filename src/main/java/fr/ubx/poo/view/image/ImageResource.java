@@ -1,6 +1,7 @@
 package fr.ubx.poo.view.image;
 
 public enum ImageResource {
+    FLOOR ("floor.png"),
     BANNER_BOMB ("banner_bomb.png"),
     BANNER_RANGE ("banner_range.png"),
     HEART("heart.png"),

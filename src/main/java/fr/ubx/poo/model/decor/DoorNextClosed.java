@@ -5,4 +5,6 @@ public class DoorNextClosed extends Decor{
     public String toString() {
         return "DoorNextClosed";
     }
+
+
 }
