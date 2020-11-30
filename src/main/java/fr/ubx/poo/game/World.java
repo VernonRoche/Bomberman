@@ -14,6 +14,7 @@ public class World {
     private final Map<Position, Decor> grid;
     private final WorldEntity[][] raw;
     public final Dimension dimension;
+    public boolean update = false; //
 
     public World(WorldEntity[][] raw) {
         this.raw = raw;
@@ -41,6 +42,7 @@ public class World {
     }
 
     public void clear(Position position) {
+        this.update = true;
         grid.remove(position);
     }
 

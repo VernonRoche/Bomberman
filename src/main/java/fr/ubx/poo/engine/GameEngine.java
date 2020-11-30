@@ -5,10 +5,11 @@
 package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
-import fr.ubx.poo.view.sprite.Sprite;
-import fr.ubx.poo.view.sprite.SpriteFactory;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.model.go.character.Player;
+import fr.ubx.poo.view.sprite.Sprite;
+import fr.ubx.poo.view.sprite.SpriteDecor;
+import fr.ubx.poo.view.sprite.SpriteFactory;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -131,6 +132,17 @@ public final class GameEngine {
 
     private void update(long now) {
         player.update(now);
+
+        if(game.getWorld().update) {
+            for(int x=0 ; x<sprites.size() ; x++){
+                if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
+                    sprites.get(x).setImage(null);
+                    sprites.get(x).remove();
+                }
+            }
+            game.getWorld().update = false;
+        }
+
 
         if (player.isAlive() == false) {
             gameLoop.stop();

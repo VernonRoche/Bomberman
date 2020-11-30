@@ -5,12 +5,12 @@
 package fr.ubx.poo.model.go.character;
 
 import fr.ubx.poo.game.Direction;
+import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.decor.*;
 import fr.ubx.poo.model.go.GameObject;
-import fr.ubx.poo.game.Game;
 
 public class Player extends GameObject implements Movable {
 
@@ -18,6 +18,9 @@ public class Player extends GameObject implements Movable {
     Direction direction;
     private boolean moveRequested = false;
     private int lives = 1;
+    private int nb_bomb = 0;
+    private int range_bomb = 1;
+    private int nb_key = 0;
     private boolean winner;
 
     public Player(Game game, Position position) {
@@ -28,6 +31,18 @@ public class Player extends GameObject implements Movable {
 
     public int getLives() {
         return lives;
+    }
+
+    public int getNb_bomb() {
+        return nb_bomb;
+    }
+
+    public int getRange_bomb() {
+        return range_bomb;
+    }
+
+    public int getNb_key() {
+        return nb_key;
     }
 
     public Direction getDirection() {
@@ -48,6 +63,7 @@ public class Player extends GameObject implements Movable {
             return false;
         }
 
+        World map = game.getWorld();
         Decor decor=game.getWorld().get(nextPos);
         if (decor instanceof Stone || decor instanceof Box || decor instanceof Tree){
             return false;
@@ -55,6 +71,38 @@ public class Player extends GameObject implements Movable {
         //voir si on est sur la princesse
         if (decor instanceof Princess){
             winner=true;
+        }
+        if (decor instanceof Heart){
+            map.clear(nextPos);
+            lives = lives +1;
+            return true;
+        }
+        if (decor instanceof BombNumberDec){
+            if(nb_bomb == 0) {return true;}
+            map.clear(nextPos);
+            nb_bomb = nb_bomb -1;
+            return true;
+        }
+        if (decor instanceof BombNumberInc){
+            map.clear(nextPos);
+            nb_bomb = nb_bomb +1;
+            return true;
+        }
+        if (decor instanceof BombRangeDec){
+            if(range_bomb == 1) {return true;}
+            map.clear(nextPos);
+            range_bomb = range_bomb -1;
+            return true;
+        }
+        if (decor instanceof BombRangeInc){
+            map.clear(nextPos);
+            range_bomb = range_bomb +1;
+            return true;
+        }
+        if (decor instanceof Key){
+            map.clear(nextPos);
+            nb_key = nb_key +1;
+            return true;
         }
 
         return true;

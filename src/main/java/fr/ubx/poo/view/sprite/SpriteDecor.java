@@ -15,7 +15,6 @@ public class SpriteDecor extends Sprite {
 
     @Override
     public void updateImage() {
-
     }
 
     @Override
