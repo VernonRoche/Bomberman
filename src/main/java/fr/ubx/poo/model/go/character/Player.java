@@ -105,13 +105,13 @@ public class Player extends GameObject implements Movable {
         if (decor instanceof DoorNextClosed){
             if (nb_key>0){
                 map.set(nextPos, new DoorNextOpened());
-                System.out.println("opened door");
+                nb_key=nb_key-1;
             }
             return true;
         }
         if (decor instanceof DoorNextOpened){
             //nextlevel
-            System.out.println("Opened Door");
+
             return true;
         }
 

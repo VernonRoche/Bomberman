@@ -61,6 +61,9 @@ ALEX:
 -Implementer les cles
 ---Appuyer sur ENTER pour ouvrir une porte
 
+-Implementer les caisses
+---Pouvoir les bouger
+
 SYLVAIN:
 !Gameplay:
 -Points de vie

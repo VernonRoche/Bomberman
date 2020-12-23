@@ -6,9 +6,11 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.model.decor.DoorNextOpened;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.sprite.Sprite;
 import fr.ubx.poo.view.sprite.SpriteDecor;
+import fr.ubx.poo.view.sprite.SpriteDoor;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -138,6 +140,9 @@ public final class GameEngine {
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
                     sprites.get(x).setImage(null);
                     sprites.get(x).remove();
+                }
+                if(sprites.get(x) instanceof SpriteDoor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) instanceof DoorNextOpened){
+                    ((SpriteDoor) sprites.get(x)).setOpen(true);
                 }
             }
             game.getWorld().update = false;
