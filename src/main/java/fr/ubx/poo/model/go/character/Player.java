@@ -4,10 +4,7 @@
 
 package fr.ubx.poo.model.go.character;
 
-import fr.ubx.poo.game.Direction;
-import fr.ubx.poo.game.Game;
-import fr.ubx.poo.game.Position;
-import fr.ubx.poo.game.World;
+import fr.ubx.poo.game.*;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.decor.*;
 import fr.ubx.poo.model.go.GameObject;
@@ -65,6 +62,7 @@ public class Player extends GameObject implements Movable {
 
         World map = game.getWorld();
         Decor decor=game.getWorld().get(nextPos);
+
         if (decor instanceof Stone || decor instanceof Box || decor instanceof Tree){
             return false;
         }
@@ -104,6 +102,18 @@ public class Player extends GameObject implements Movable {
             nb_key = nb_key +1;
             return true;
         }
+        if (decor instanceof DoorNextClosed){
+            if (nb_key>0){
+                map.set(nextPos, new DoorNextOpened());
+                System.out.println("opened door");
+            }
+            return true;
+        }
+        if (decor instanceof DoorNextOpened){
+            //nextlevel
+            System.out.println("Opened Door");
+            return true;
+        }
 
         return true;
     }
@@ -111,6 +121,10 @@ public class Player extends GameObject implements Movable {
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
         setPosition(nextPos);
+
+    }
+
+    public void placeBomb(Position position){
 
     }
 

@@ -38,6 +38,7 @@ public class World {
     }
 
     public void set(Position position, Decor decor) {
+        this.update=true;
         grid.put(position, decor);
     }
 
