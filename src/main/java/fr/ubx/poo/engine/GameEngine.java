@@ -6,12 +6,13 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.model.decor.Box;
 import fr.ubx.poo.model.decor.DoorNextOpened;
+import fr.ubx.poo.model.decor.Floor;
 import fr.ubx.poo.model.go.character.Player;
-import fr.ubx.poo.view.sprite.Sprite;
-import fr.ubx.poo.view.sprite.SpriteDecor;
-import fr.ubx.poo.view.sprite.SpriteDoor;
-import fr.ubx.poo.view.sprite.SpriteFactory;
+import fr.ubx.poo.view.image.ImageFactory;
+import fr.ubx.poo.view.image.ImageResource;
+import fr.ubx.poo.view.sprite.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -138,11 +139,14 @@ public final class GameEngine {
         if(game.getWorld().update) {
             for(int x=0 ; x<sprites.size() ; x++){
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
-                    sprites.get(x).setImage(null);
-                    sprites.get(x).remove();
+                    sprites.get(x).setImage(ImageFactory.getInstance().get(ImageResource.FLOOR));
+                    //sprites.get(x).remove();
                 }
                 if(sprites.get(x) instanceof SpriteDoor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) instanceof DoorNextOpened){
                     ((SpriteDoor) sprites.get(x)).setOpen(true);
+                }
+                if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) !=null && game.getWorld().get(sprites.get(x).getPosition()) instanceof Box){
+                    ((SpriteDecor) sprites.get(x)).setIsBox(true);
                 }
             }
             game.getWorld().update = false;

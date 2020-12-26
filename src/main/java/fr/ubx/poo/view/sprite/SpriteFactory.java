@@ -34,8 +34,10 @@ public final class SpriteFactory {
             return new SpriteDecor(layer, factory.get(BOMB_NB_DEC), position);
         if (decor instanceof BombNumberInc)
             return new SpriteDecor(layer, factory.get(BOMB_NB_INC), position);
+
         if (decor instanceof Box)
             return new SpriteDecor(layer, factory.get(BOX), position);
+
         if (decor instanceof Princess)
             return new SpriteDecor(layer, factory.get(PRINCESS), position);
         if (decor instanceof Key)

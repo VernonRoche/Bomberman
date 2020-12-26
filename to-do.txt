@@ -12,25 +12,6 @@
 
 !Gameplay:
 
-
--Implementer les bombes
----Pouvoir les placer avec ESPACE
----Mettre un minuteur
----Pouvoir exploser des choses
----Infliger des degats au joueur et aux monstres
----Enlever les bonus/malus
-
-
-
-
-
--Implementer les caisses
----Pouvoir les bouger
----Pouvoir les detruire
-
-
--Implementer les portes
-
 -Implementer les bonus/malus
 ---Les recuperer et les enlever de la carte
 
@@ -58,11 +39,16 @@
 
 ALEX:
 
--Implementer les cles
----Appuyer sur ENTER pour ouvrir une porte
-
 -Implementer les caisses
 ---Pouvoir les bouger
+---Pouvoir les detruire
+
+-Implementer les bombes
+---Pouvoir les placer avec ESPACE
+---Mettre un minuteur
+---Pouvoir exploser des choses
+---Infliger des degats au joueur et aux monstres
+---Enlever les bonus/malus
 
 SYLVAIN:
 !Gameplay:

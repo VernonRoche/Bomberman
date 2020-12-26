@@ -63,7 +63,12 @@ public class Player extends GameObject implements Movable {
         World map = game.getWorld();
         Decor decor=game.getWorld().get(nextPos);
 
-        if (decor instanceof Stone || decor instanceof Box || decor instanceof Tree){
+        if (decor instanceof Stone || decor instanceof Tree){
+            return false;
+        }
+        if (decor instanceof Box){
+            moveBox(nextPos);
+            System.out.println("BOX");
             return false;
         }
         //voir si on est sur la princesse
@@ -114,7 +119,7 @@ public class Player extends GameObject implements Movable {
 
             return true;
         }
-
+        System.out.println("FLOOR");
         return true;
     }
 
@@ -143,6 +148,51 @@ public class Player extends GameObject implements Movable {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean canMoveBox(Position position){
+        Decor decor=game.getWorld().get(position);
+        if (decor instanceof Floor){
+            return true;
+        }
+        return false;
+    }
+
+    public void moveBox(Position nextPos){
+        World map = game.getWorld();
+        switch (getDirection()){
+            case E:
+                Position creationPosE=new Position(nextPos.x+1, nextPos.y);
+                if (canMoveBox(creationPosE)){
+                    map.clear(nextPos);
+                    map.set(creationPosE,new Box());
+
+                }
+                return;
+            case N:
+                Position creationPosN=new Position(nextPos.x, nextPos.y-1);
+                if (canMoveBox(creationPosN)){
+                    map.clear(nextPos);
+                    map.set(creationPosN,new Box());
+                }
+                return;
+            case S:
+                Position creationPosS=new Position(nextPos.x, nextPos.y+1);
+                if (canMoveBox(creationPosS)){
+                    map.clear(nextPos);
+                    map.set(creationPosS,new Box());
+                }
+                return;
+            case W:
+                Position creationPosW=new Position(nextPos.x-1, nextPos.y);
+                if (canMoveBox(creationPosW)){
+                    map.clear(nextPos);
+                    map.set(creationPosW,new Box());
+                }
+                return;
+            default:
+
+        }
     }
 
 }
