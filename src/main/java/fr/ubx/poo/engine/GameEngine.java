@@ -148,7 +148,12 @@ public final class GameEngine {
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) !=null && game.getWorld().get(sprites.get(x).getPosition()) instanceof Box){
                     ((SpriteDecor) sprites.get(x)).setIsBox(true);
                 }
+                if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) !=null && game.getWorld().get(sprites.get(x).getPosition()) instanceof Floor){
+                    ((SpriteDecor) sprites.get(x)).setIsFloor(true);
+                }
+
             }
+
             game.getWorld().update = false;
         }
 

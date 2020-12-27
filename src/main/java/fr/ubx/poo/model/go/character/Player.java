@@ -164,29 +164,30 @@ public class Player extends GameObject implements Movable {
             case E:
                 Position creationPosE=new Position(nextPos.x+1, nextPos.y);
                 if (canMoveBox(creationPosE)){
-                    map.clear(nextPos);
+                    map.set(nextPos,new Floor());
                     map.set(creationPosE,new Box());
+
 
                 }
                 return;
             case N:
                 Position creationPosN=new Position(nextPos.x, nextPos.y-1);
                 if (canMoveBox(creationPosN)){
-                    map.clear(nextPos);
+                    map.set(nextPos,new Floor());
                     map.set(creationPosN,new Box());
                 }
                 return;
             case S:
                 Position creationPosS=new Position(nextPos.x, nextPos.y+1);
                 if (canMoveBox(creationPosS)){
-                    map.clear(nextPos);
+                    map.set(nextPos,new Floor());
                     map.set(creationPosS,new Box());
                 }
                 return;
             case W:
                 Position creationPosW=new Position(nextPos.x-1, nextPos.y);
                 if (canMoveBox(creationPosW)){
-                    map.clear(nextPos);
+                    map.set(nextPos,new Floor());
                     map.set(creationPosW,new Box());
                 }
                 return;
