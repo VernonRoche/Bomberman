@@ -7,6 +7,7 @@ package fr.ubx.poo.model.go.character;
 import fr.ubx.poo.game.*;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.decor.*;
+import fr.ubx.poo.model.go.Bomb;
 import fr.ubx.poo.model.go.GameObject;
 
 public class Player extends GameObject implements Movable {
@@ -14,6 +15,7 @@ public class Player extends GameObject implements Movable {
     private final boolean alive = true;
     Direction direction;
     private boolean moveRequested = false;
+    private boolean bombRequested = false;
     private int lives = 1;
     private int nb_bomb = 0;
     private int range_bomb = 1;
@@ -53,6 +55,10 @@ public class Player extends GameObject implements Movable {
         moveRequested = true;
     }
 
+    public void requestBomb(){
+        this.bombRequested=true;
+    }
+
     @Override
     public boolean canMove(Direction direction) {
         Position nextPos=direction.nextPosition(getPosition());
@@ -68,7 +74,7 @@ public class Player extends GameObject implements Movable {
         }
         if (decor instanceof Box){
             moveBox(nextPos);
-            System.out.println("BOX");
+            //System.out.println("BOX");
             return false;
         }
         //voir si on est sur la princesse
@@ -119,7 +125,7 @@ public class Player extends GameObject implements Movable {
 
             return true;
         }
-        System.out.println("FLOOR");
+        //System.out.println("FLOOR");
         return true;
     }
 
@@ -130,7 +136,20 @@ public class Player extends GameObject implements Movable {
     }
 
     public void placeBomb(Position position){
+        if (this.nb_bomb > 0) {
+            System.out.println("PLACING BOMB");
+            this.nb_bomb = this.nb_bomb - 1;
+            game.getWorld().addBombWorld(new Bomb(game,getPosition(),getRange_bomb()));
+        }
+        this.bombRequested=false;
+    }
 
+    public boolean isBombRequested() {
+        return bombRequested;
+    }
+
+    public void setBombRequested(boolean bool){
+        this.bombRequested=bool;
     }
 
     public void update(long now) {
@@ -140,6 +159,11 @@ public class Player extends GameObject implements Movable {
             }
         }
         moveRequested = false;
+
+        if (isBombRequested()){
+            placeBomb(getPosition());
+        }
+
     }
 
     public boolean isWinner() {

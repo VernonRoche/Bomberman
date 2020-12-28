@@ -5,8 +5,11 @@
 package fr.ubx.poo.game;
 
 import fr.ubx.poo.model.decor.Decor;
+import fr.ubx.poo.model.go.Bomb;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -15,6 +18,7 @@ public class World {
     private final WorldEntity[][] raw;
     public final Dimension dimension;
     public boolean update = false; //
+    private List<Bomb> placedBombs=new ArrayList<>();
 
     public World(WorldEntity[][] raw) {
         this.raw = raw;
@@ -61,5 +65,13 @@ public class World {
 
     public boolean isEmpty(Position position) {
         return grid.get(position) == null;
+    }
+
+    public void addBombWorld(Bomb bomb){
+        placedBombs.add(bomb);
+    }
+
+    public List<Bomb> getPlacedBombs(){
+        return placedBombs;
     }
 }

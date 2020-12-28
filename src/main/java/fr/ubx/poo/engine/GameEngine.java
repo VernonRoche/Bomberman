@@ -9,6 +9,7 @@ import fr.ubx.poo.game.Game;
 import fr.ubx.poo.model.decor.Box;
 import fr.ubx.poo.model.decor.DoorNextOpened;
 import fr.ubx.poo.model.decor.Floor;
+import fr.ubx.poo.model.go.Bomb;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
@@ -41,6 +42,7 @@ public final class GameEngine {
     private Input input;
     private Stage stage;
     private Sprite spritePlayer;
+    private List<Sprite> spriteBombs= new ArrayList<>();
 
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
@@ -110,6 +112,9 @@ public final class GameEngine {
         if (input.isMoveUp()) {
             player.requestMove(Direction.N);
         }
+        if (input.isBomb()){
+            player.requestBomb();
+        }
         input.clear();
     }
 
@@ -156,7 +161,18 @@ public final class GameEngine {
 
             game.getWorld().update = false;
         }
-
+        if (game.getWorld().getPlacedBombs().isEmpty()==false){
+            if(game.getWorld().getPlacedBombs().size()!=spriteBombs.size()){
+                for(int x=0;x<game.getWorld().getPlacedBombs().size();x++){
+                    if(game.getWorld().getPlacedBombs().get(x).getBombTimer()<4){
+                       //ne se passe rien
+                    }
+                    else{
+                        spriteBombs.add(SpriteFactory.createBombSprite(layer,game.getWorld().getPlacedBombs().get(x)));
+                    }
+                }
+            }
+        }
 
         if (player.isAlive() == false) {
             gameLoop.stop();
@@ -170,6 +186,7 @@ public final class GameEngine {
 
     private void render() {
         sprites.forEach(Sprite::render);
+        spriteBombs.forEach(Sprite::render);
         // last rendering to have player in the foreground
         spritePlayer.render();
     }

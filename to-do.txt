@@ -40,7 +40,6 @@
 ALEX:
 
 -Implementer les caisses
----Pouvoir les bouger
 ---Pouvoir les detruire
 
 -Implementer les bombes

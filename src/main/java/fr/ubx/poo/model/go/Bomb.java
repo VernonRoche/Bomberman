@@ -6,7 +6,8 @@ import fr.ubx.poo.model.go.GameObject;
 
 public class Bomb extends GameObject{
     private int range=1;
-    private double timer=3.0;
+    private long bombTimer=4;
+    private boolean hasExploded=false;
 
     public Bomb (Game game, Position position, int range){
         super(game,position);
@@ -21,7 +22,19 @@ public class Bomb extends GameObject{
 
     }
 
-    public void bombTimer(){
+    public long getBombTimer(){
+        return this.bombTimer;
+    }
 
+    public void setBombTimer(long newtimer){
+        this.bombTimer=newtimer;
+    }
+
+    public boolean getHasExploded(){
+        return this.hasExploded;
+    }
+
+    public void setHasExploded(boolean bool){
+        this.hasExploded=bool;
     }
 }
