@@ -67,7 +67,6 @@ public class Monster extends GameObject implements Movable {
             );
             requestMove(Direction.random());
             if (moveRequested) {
-                System.out.println("Yes");
                 if (canMove(direction)) {
                     doMove(direction);
                 }

@@ -16,11 +16,12 @@ public class Player extends GameObject implements Movable {
     Direction direction;
     private boolean moveRequested = false;
     private boolean bombRequested = false;
-    private int lives = 1;
+    private int lives = 3;
     private int nb_bomb = 0;
     private int range_bomb = 1;
     private int nb_key = 0;
     private boolean winner;
+    private boolean is_hurt = false;
 
     public Player(Game game, Position position) {
         super(game, position);
@@ -46,6 +47,14 @@ public class Player extends GameObject implements Movable {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public void setIs_hurt(boolean is_hurt) {
+        this.is_hurt = is_hurt;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
     public void requestMove(Direction direction) {
@@ -171,6 +180,7 @@ public class Player extends GameObject implements Movable {
     }
 
     public boolean isAlive() {
+        if(getLives() <= 0) return false;
         return alive;
     }
 
@@ -217,6 +227,22 @@ public class Player extends GameObject implements Movable {
                 return;
             default:
 
+        }
+    }
+
+    public void hurt(){
+        if(!is_hurt){
+            setIs_hurt(true);
+            setLives(getLives() - 1);
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            setIs_hurt(false);
+                        }
+                    },
+                    1000
+            );
         }
     }
 

@@ -149,6 +149,10 @@ public final class GameEngine {
         player.update(now);
         monster.update(now, 1000);
 
+        if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
+            player.hurt();
+        }
+
         if(game.getWorld().update) {
             for(int x=0 ; x<sprites.size() ; x++){
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
