@@ -9,4 +9,9 @@ public class Stone extends Decor {
     public String toString() {
         return "Stone";
     }
+
+    @Override
+    public boolean canWalk(){
+        return false;
+    };
 }

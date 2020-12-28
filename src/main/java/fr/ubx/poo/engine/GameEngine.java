@@ -9,11 +9,14 @@ import fr.ubx.poo.game.Game;
 import fr.ubx.poo.model.decor.Box;
 import fr.ubx.poo.model.decor.DoorNextOpened;
 import fr.ubx.poo.model.decor.Floor;
-import fr.ubx.poo.model.go.Bomb;
+import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
-import fr.ubx.poo.view.sprite.*;
+import fr.ubx.poo.view.sprite.Sprite;
+import fr.ubx.poo.view.sprite.SpriteDecor;
+import fr.ubx.poo.view.sprite.SpriteDoor;
+import fr.ubx.poo.view.sprite.SpriteFactory;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -44,10 +47,14 @@ public final class GameEngine {
     private Sprite spritePlayer;
     private List<Sprite> spriteBombs= new ArrayList<>();
 
+    private Sprite spriteMonster;
+    private final Monster monster;
+
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
         this.game = game;
         this.player = game.getPlayer();
+        this.monster = game.getMonster();
         initialize(stage, game);
         buildAndSetGameLoop();
     }
@@ -75,7 +82,7 @@ public final class GameEngine {
         // Create decor sprites
         game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
-
+        spriteMonster = SpriteFactory.createMonster(layer, monster);
     }
 
     protected final void buildAndSetGameLoop() {
@@ -140,6 +147,7 @@ public final class GameEngine {
 
     private void update(long now) {
         player.update(now);
+        monster.update(now, 1000);
 
         if(game.getWorld().update) {
             for(int x=0 ; x<sprites.size() ; x++){
@@ -188,6 +196,7 @@ public final class GameEngine {
         sprites.forEach(Sprite::render);
         spriteBombs.forEach(Sprite::render);
         // last rendering to have player in the foreground
+        spriteMonster.render();
         spritePlayer.render();
     }
 

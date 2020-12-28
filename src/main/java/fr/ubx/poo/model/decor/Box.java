@@ -1,5 +1,4 @@
 package fr.ubx.poo.model.decor;
-import fr.ubx.poo.game.Direction;
 
 public class Box extends Decor{
     @Override
@@ -7,4 +6,8 @@ public class Box extends Decor{
         return "Box";
     }
 
+    @Override
+    public boolean canWalk(){
+        return false;
+    };
 }

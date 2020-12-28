@@ -37,6 +37,17 @@ public class World {
         throw new PositionNotFoundException("Player");
     }
 
+    public Position findMonster() throws PositionNotFoundException {
+        for (int x = 0; x < dimension.width; x++) {
+            for (int y = 0; y < dimension.height; y++) {
+                if (raw[y][x] == WorldEntity.Monster) {
+                    return new Position(x, y);
+                }
+            }
+        }
+        throw new PositionNotFoundException("Monster");
+    }
+
     public Decor get(Position position) {
         return grid.get(position);
     }
