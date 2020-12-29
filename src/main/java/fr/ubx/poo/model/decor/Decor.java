@@ -14,5 +14,4 @@ public class Decor extends Entity {
     public boolean canWalk(){
         return true;
     };
-
 }

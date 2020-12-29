@@ -6,16 +6,9 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
-import fr.ubx.poo.model.decor.Box;
-import fr.ubx.poo.model.decor.DoorNextOpened;
-import fr.ubx.poo.model.decor.Floor;
 import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
-import fr.ubx.poo.view.image.ImageFactory;
-import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.Sprite;
-import fr.ubx.poo.view.sprite.SpriteDecor;
-import fr.ubx.poo.view.sprite.SpriteDoor;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -154,7 +147,7 @@ public final class GameEngine {
         }
 
         if(game.getWorld().update) {
-            for(int x=0 ; x<sprites.size() ; x++){
+            /*for(int x=0 ; x<sprites.size() ; x++){
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
                     sprites.get(x).setImage(ImageFactory.getInstance().get(ImageResource.FLOOR));
                     //sprites.get(x).remove();
@@ -169,7 +162,10 @@ public final class GameEngine {
                     ((SpriteDecor) sprites.get(x)).setIsFloor(true);
                 }
 
-            }
+            }*/
+            sprites.forEach(sprite -> sprite.remove());
+            sprites.clear();
+            game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
 
             game.getWorld().update = false;
         }

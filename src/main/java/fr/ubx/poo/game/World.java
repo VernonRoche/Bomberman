@@ -5,6 +5,7 @@
 package fr.ubx.poo.game;
 
 import fr.ubx.poo.model.decor.Decor;
+import fr.ubx.poo.model.decor.Floor;
 import fr.ubx.poo.model.go.Bomb;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class World {
     public void clear(Position position) {
         this.update = true;
         grid.remove(position);
+        set(position,new Floor());
     }
 
     public void forEach(BiConsumer<Position, Decor> fn) {
