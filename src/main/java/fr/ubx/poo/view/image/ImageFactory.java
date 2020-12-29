@@ -62,21 +62,24 @@ public final class ImageFactory {
         return get(directions[direction.ordinal()]);
     }
 
-    public Image getBomb(long time){
-        if (time==1){
+    public Image getBomb(long timePassed){
+        if (timePassed==3){
             return get(BOMB1);
         }
-        if (time==2){
+        if (timePassed==2){
             return get(BOMB2);
         }
-        if (time==3){
+        if (timePassed==1){
             return get(BOMB3);
         }
-        if (time==4){
+        if (timePassed==0){
             return get(BOMB4);
         }
-        else{
+        if (timePassed==4){
             return get(EXPLOSION);
+        }
+        else{
+            return null;
         }
     }
 

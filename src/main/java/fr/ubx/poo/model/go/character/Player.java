@@ -17,8 +17,8 @@ public class Player extends GameObject implements Movable {
     private boolean moveRequested = false;
     private boolean bombRequested = false;
     private int lives = 3;
-    private int nb_bomb = 0;
-    private int range_bomb = 1;
+    private int nb_bomb = 3;
+    private int range_bomb = 3;
     private int nb_key = 0;
     private boolean winner;
     private boolean is_hurt = false;
@@ -140,11 +140,11 @@ public class Player extends GameObject implements Movable {
 
     }
 
-    public void placeBomb(Position position){
+    public void placeBomb(Position position, long now){
         if (this.nb_bomb > 0) {
             System.out.println("PLACING BOMB");
             this.nb_bomb = this.nb_bomb - 1;
-            game.getWorld().addBombWorld(new Bomb(game,getPosition(),getRange_bomb()));
+            game.getWorld().addBombWorld(new Bomb(game,getPosition(),getRange_bomb(), now));
         }
         this.bombRequested=false;
     }
@@ -166,7 +166,7 @@ public class Player extends GameObject implements Movable {
         moveRequested = false;
 
         if (isBombRequested()){
-            placeBomb(getPosition());
+            placeBomb(getPosition(), now/(1000000000));
         }
 
     }

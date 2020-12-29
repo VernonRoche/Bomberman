@@ -170,6 +170,7 @@ public final class GameEngine {
             game.getWorld().update = false;
         }
         if (game.getWorld().getPlacedBombs().isEmpty()==false){
+            //Ajouter les bombes manquantes dans les sprites
             if(game.getWorld().getPlacedBombs().size()!=spriteBombs.size()){
                 for(int x=0;x<game.getWorld().getPlacedBombs().size();x++){
                     if(game.getWorld().getPlacedBombs().get(x).getBombTimer()<4){
@@ -178,6 +179,19 @@ public final class GameEngine {
                     else{
                         spriteBombs.add(SpriteFactory.createBombSprite(layer,game.getWorld().getPlacedBombs().get(x)));
                     }
+                }
+            }
+            //Resolution du timer des bombes
+            for(int x=0;x<game.getWorld().getPlacedBombs().size();x++){
+                //Explosion de bombe si now-le vieu now est egal au timer
+                if(game.getWorld().getPlacedBombs().get(x).getTimePassed()>=game.getWorld().getPlacedBombs().get(x).getBombTimer()){
+                    game.getWorld().getPlacedBombs().get(x).bombExplode(game.getWorld().getPlacedBombs().get(x).getPosition());
+                    game.getWorld().getPlacedBombs().remove(x);
+                    spriteBombs.remove(x);
+                }
+                else{
+                    game.getWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getWorld().getPlacedBombs().get(x).getTimePlaced());
+                    //System.out.println(now-game.getWorld().getPlacedBombs().get(x).getTimePlaced());
                 }
             }
         }
