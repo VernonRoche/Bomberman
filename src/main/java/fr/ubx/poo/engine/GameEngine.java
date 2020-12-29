@@ -172,13 +172,8 @@ public final class GameEngine {
         if (game.getWorld().getPlacedBombs().isEmpty()==false){
             //Ajouter les bombes manquantes dans les sprites
             if(game.getWorld().getPlacedBombs().size()!=spriteBombs.size()){
-                for(int x=0;x<game.getWorld().getPlacedBombs().size();x++){
-                    if(game.getWorld().getPlacedBombs().get(x).getBombTimer()<4){
-                       //ne se passe rien
-                    }
-                    else{
+                for(int x=spriteBombs.size();x<game.getWorld().getPlacedBombs().size();x++){
                         spriteBombs.add(SpriteFactory.createBombSprite(layer,game.getWorld().getPlacedBombs().get(x)));
-                    }
                 }
             }
             //Resolution du timer des bombes
@@ -188,10 +183,11 @@ public final class GameEngine {
                     game.getWorld().getPlacedBombs().get(x).bombExplode(game.getWorld().getPlacedBombs().get(x).getPosition());
                     game.getWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);
+                    System.out.println(spriteBombs);
                 }
                 else{
                     game.getWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getWorld().getPlacedBombs().get(x).getTimePlaced());
-                    //System.out.println(now-game.getWorld().getPlacedBombs().get(x).getTimePlaced());
+
                 }
             }
         }
