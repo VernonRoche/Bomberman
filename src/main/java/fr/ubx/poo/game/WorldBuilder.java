@@ -53,11 +53,11 @@ public class WorldBuilder {
                 return new DoorNextOpened();
             case DoorPrevOpened:
                 return new DoorPrevOpened();
-            case Empty:
-                return new Floor();
+            /*case Empty:
+                return new Floor();*/
 
             default:
-                return null;
+                return new Floor();
         }
     }
 }
