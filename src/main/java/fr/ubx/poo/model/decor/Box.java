@@ -10,4 +10,10 @@ public class Box extends Decor{
     public boolean canWalk(){
         return false;
     };
+
+    @Override
+    public boolean isBox() { return true; }
+
+    @Override
+    public boolean canExplode() { return true; }
 }

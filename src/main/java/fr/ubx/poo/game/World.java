@@ -91,4 +91,6 @@ public class World {
     }
 
     public WorldEntity[][] getRaw() { return raw; }
+
+    public Dimension getDimension() { return dimension; }
 }

@@ -5,4 +5,7 @@ public class BombNumberInc extends Decor {
     public String toString() {
         return "BombNumberInc";
     }
+
+    @Override
+    public boolean canExplode() { return true; }
 }

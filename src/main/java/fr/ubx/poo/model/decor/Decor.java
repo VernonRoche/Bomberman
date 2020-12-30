@@ -11,7 +11,10 @@ import fr.ubx.poo.model.Entity;
  */
 public class Decor extends Entity {
 
-    public boolean canWalk(){
-        return true;
-    };
+    public boolean canWalk(){ return true; }
+
+    public boolean isBox(){ return false; }
+
+    public boolean canExplode(){ return false; }
+
 }

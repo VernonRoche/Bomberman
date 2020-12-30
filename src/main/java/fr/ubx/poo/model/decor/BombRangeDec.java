@@ -5,4 +5,7 @@ public class BombRangeDec extends Decor {
     public String toString() {
         return "BombRangeDec";
     }
+
+    @Override
+    public boolean canExplode() { return true; }
 }

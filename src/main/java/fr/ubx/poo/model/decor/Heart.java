@@ -5,4 +5,7 @@ public class Heart extends Decor{
     public String toString() {
         return "Heart";
     }
+
+    @Override
+    public boolean canExplode() { return true; }
 }
