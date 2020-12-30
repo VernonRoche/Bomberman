@@ -89,4 +89,6 @@ public class World {
     public List<Bomb> getPlacedBombs(){
         return placedBombs;
     }
+
+    public WorldEntity[][] getRaw() { return raw; }
 }

@@ -116,6 +116,9 @@ public final class GameEngine {
         if (input.isBomb()){
             player.requestBomb();
         }
+        if (input.isKey()){
+            player.requestKey();
+        }
         input.clear();
     }
 

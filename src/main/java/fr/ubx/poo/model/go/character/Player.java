@@ -15,6 +15,8 @@ import fr.ubx.poo.model.go.GameObject;
 
 import java.util.List;
 
+import static fr.ubx.poo.game.WorldEntity.DoorNextClosed;
+
 public class Player extends GameObject implements Movable {
 
     private final boolean alive = true;
@@ -124,11 +126,11 @@ public class Player extends GameObject implements Movable {
             return true;
         }
         if (decor instanceof DoorNextClosed){
-            if (nb_key>0){
+            /*if (nb_key>0){
                 map.set(nextPos, new DoorNextOpened());
                 nb_key=nb_key-1;
-            }
-            return true;
+            }*/
+            return false;
         }
         if (decor instanceof DoorNextOpened){
             //nextlevel
@@ -264,6 +266,16 @@ public class Player extends GameObject implements Movable {
                     },
                     1000
             );
+        }
+    }
+
+    public void requestKey(){
+        Position nextPos = direction.nextPosition(getPosition());
+        World map = game.getWorld();
+
+        if (nb_key>0 && game.getWorld().getRaw()[nextPos.y][nextPos.x] == DoorNextClosed){
+            map.set(nextPos, new DoorNextOpened());
+            nb_key=nb_key-1;
         }
     }
 
