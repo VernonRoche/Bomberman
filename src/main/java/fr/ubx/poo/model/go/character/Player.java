@@ -4,11 +4,16 @@
 
 package fr.ubx.poo.model.go.character;
 
-import fr.ubx.poo.game.*;
+import fr.ubx.poo.game.Direction;
+import fr.ubx.poo.game.Game;
+import fr.ubx.poo.game.Position;
+import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.decor.*;
 import fr.ubx.poo.model.go.Bomb;
 import fr.ubx.poo.model.go.GameObject;
+
+import java.util.List;
 
 public class Player extends GameObject implements Movable {
 
@@ -182,9 +187,15 @@ public class Player extends GameObject implements Movable {
 
     public boolean canMoveBox(Position position){
         Decor decor=game.getWorld().get(position);
-        if(game.getMonster().getPosition().x == position.x && game.getMonster().getPosition().y == position.y){
-            return false;
+
+        List<Monster> monster;
+        monster = game.getMonster();
+        for(Monster mons: monster){
+            if(mons.getPosition().x == position.x && mons.getPosition().y == position.y){
+                return false;
+            }
         }
+
         if (decor instanceof Floor){
             return true;
         }

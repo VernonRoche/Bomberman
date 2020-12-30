@@ -38,14 +38,16 @@ public class World {
         throw new PositionNotFoundException("Player");
     }
 
-    public Position findMonster() throws PositionNotFoundException {
+    public List<Position> findMonster() throws PositionNotFoundException {
+        List<Position> positions = new ArrayList<>();
         for (int x = 0; x < dimension.width; x++) {
             for (int y = 0; y < dimension.height; y++) {
                 if (raw[y][x] == WorldEntity.Monster) {
-                    return new Position(x, y);
+                    positions.add(new Position(x, y));
                 }
             }
         }
+        if(!positions.isEmpty()) return positions;
         throw new PositionNotFoundException("Monster");
     }
 

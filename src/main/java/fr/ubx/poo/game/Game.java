@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Game {
@@ -21,19 +23,20 @@ public class Game {
     private final String worldPath;
     public int initPlayerLives;
 
-    private final Monster monster;
+    private List<Monster> monster = new ArrayList<>();
 
     public Game(String worldPath) {
         world = new WorldStatic();
         this.worldPath = worldPath;
         loadConfig(worldPath);
         Position positionPlayer = null;
-        Position positionMonster = null;
+        List<Position> positionMonster = new ArrayList<>();
         try {
             positionPlayer = world.findPlayer();
             player = new Player(this, positionPlayer);
             positionMonster = world.findMonster();
-            monster = new Monster(this, positionMonster);
+            for(Position pos : positionMonster)
+                monster.add(new Monster(this, pos));
         } catch (PositionNotFoundException e) {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -63,7 +66,5 @@ public class Game {
         return this.player;
     }
 
-    public Monster getMonster() { return this.monster; }
-
-
+    public List<Monster> getMonster() { return monster; }
 }

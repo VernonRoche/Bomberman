@@ -40,8 +40,8 @@ public final class GameEngine {
     private Sprite spritePlayer;
     private List<Sprite> spriteBombs= new ArrayList<>();
 
-    private Sprite spriteMonster;
-    private final Monster monster;
+    private List<Sprite> spriteMonster = new ArrayList<>();
+    private final List<Monster> monster;
 
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
@@ -75,7 +75,8 @@ public final class GameEngine {
         // Create decor sprites
         game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
-        spriteMonster = SpriteFactory.createMonster(layer, monster);
+        for(Monster mons: monster)
+            spriteMonster.add(SpriteFactory.createMonster(layer, mons));
     }
 
     protected final void buildAndSetGameLoop() {
@@ -140,10 +141,13 @@ public final class GameEngine {
 
     private void update(long now) {
         player.update(now);
-        monster.update(now, 1000);
+        for(Monster mons: monster)
+            mons.update(now, 1000);
 
-        if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
-            player.hurt();
+        for(Monster mons: monster){
+            if(player.getPosition().x == mons.getPosition().x && player.getPosition().y == mons.getPosition().y){
+                player.hurt();
+            }
         }
 
         if(game.getWorld().update) {
@@ -206,7 +210,8 @@ public final class GameEngine {
         sprites.forEach(Sprite::render);
         spriteBombs.forEach(Sprite::render);
         // last rendering to have player in the foreground
-        spriteMonster.render();
+        for(Sprite spriteMons: spriteMonster)
+            spriteMons.render();
         spritePlayer.render();
     }
 
