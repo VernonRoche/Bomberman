@@ -154,6 +154,13 @@ public final class GameEngine {
             }
         }
 
+        for(Monster mons: monster){
+            if (mons.getLives()==0){
+                monster.remove(mons);
+                spriteMonster.remove(mons);
+            }
+        }
+
         if(game.getWorld().update) {
             /*for(int x=0 ; x<sprites.size() ; x++){
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){

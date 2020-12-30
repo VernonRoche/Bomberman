@@ -3,6 +3,7 @@ package fr.ubx.poo.model.go;
 import fr.ubx.poo.game.*;
 import fr.ubx.poo.model.decor.*;
 import fr.ubx.poo.model.go.GameObject;
+import fr.ubx.poo.model.go.character.Monster;
 
 public class Bomb extends GameObject{
     private int range=1;
@@ -21,18 +22,24 @@ public class Bomb extends GameObject{
         map.clear(position);
         Position playerPosition=game.getPlayer().getPosition();
         for(int xAxis= position.x-range; xAxis< position.x+range;xAxis++){
-            if (playerPosition.x==xAxis){
-                if (playerPosition.y==position.y){
+            if (playerPosition.x==xAxis && playerPosition.y==position.y){
                     game.getPlayer().hurt();
+            }
+            for (Monster mons: game.getMonster()){
+                if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
+                    mons.setLives(mons.getLives()-1);
                 }
             }
             map.clear(new Position(xAxis, position.y));
 
         }
         for(int yAxis= position.y-range; yAxis< position.y+range;yAxis++){
-            if (playerPosition.y==yAxis){
-                if (playerPosition.x==position.x){
+            if (playerPosition.y==yAxis && playerPosition.x==position.x){
                     game.getPlayer().hurt();
+            }
+            for (Monster mons: game.getMonster()){
+                if (mons.getPosition().x==yAxis && mons.getPosition().y==position.x){
+                    mons.setLives(mons.getLives()-1);
                 }
             }
             map.clear(new Position(position.x, yAxis));

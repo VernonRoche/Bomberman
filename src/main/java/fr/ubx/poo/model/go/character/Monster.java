@@ -23,6 +23,8 @@ public class Monster extends GameObject implements Movable {
         return lives;
     }
 
+    public void setLives(int newlives){ this.lives=newlives; }
+
     public void requestMove(Direction direction) {
         if (direction != this.direction) {
             this.direction = direction;
