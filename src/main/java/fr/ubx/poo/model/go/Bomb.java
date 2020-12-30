@@ -7,7 +7,6 @@ import fr.ubx.poo.model.go.GameObject;
 public class Bomb extends GameObject{
     private int range=1;
     private long bombTimer=4;
-    private boolean hasExploded=false;
     private long timePlaced;
     private long timePassed=0;
 
@@ -17,36 +16,33 @@ public class Bomb extends GameObject{
         this.timePlaced=timePlaced;
     }
 
-    public void bombSet(Position position){
-
-    }
-
     public void bombExplode(Position position){
         World map = game.getWorld();
         map.clear(position);
+        Position playerPosition=game.getPlayer().getPosition();
         for(int xAxis= position.x-range; xAxis< position.x+range;xAxis++){
+            if (playerPosition.x==xAxis){
+                if (playerPosition.y==position.y){
+                    game.getPlayer().hurt();
+                }
+            }
             map.clear(new Position(xAxis, position.y));
+
         }
         for(int yAxis= position.y-range; yAxis< position.y+range;yAxis++){
+            if (playerPosition.y==yAxis){
+                if (playerPosition.x==position.x){
+                    game.getPlayer().hurt();
+                }
+            }
             map.clear(new Position(position.x, yAxis));
+
         }
 
     }
 
     public long getBombTimer(){
         return this.bombTimer;
-    }
-
-    public void setBombTimer(long newtimer){
-        this.bombTimer=newtimer;
-    }
-
-    public boolean getHasExploded(){
-        return this.hasExploded;
-    }
-
-    public void setHasExploded(boolean bool){
-        this.hasExploded=bool;
     }
 
     public long getTimePlaced(){

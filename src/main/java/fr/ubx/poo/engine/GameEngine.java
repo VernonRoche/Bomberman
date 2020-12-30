@@ -6,6 +6,7 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.game.PositionNotFoundException;
 import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.sprite.Sprite;
@@ -142,7 +143,7 @@ public final class GameEngine {
     }
 
 
-    private void update(long now) {
+    private void update(long now){
         player.update(now);
         for(Monster mons: monster)
             mons.update(now, 1000);
@@ -190,7 +191,7 @@ public final class GameEngine {
                     game.getWorld().getPlacedBombs().get(x).bombExplode(game.getWorld().getPlacedBombs().get(x).getPosition());
                     game.getWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);
-                    System.out.println(spriteBombs);
+                    //System.out.println(spriteBombs);
                 }
                 else{
                     game.getWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getWorld().getPlacedBombs().get(x).getTimePlaced());
