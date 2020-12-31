@@ -6,5 +6,8 @@ public class DoorNextClosed extends Decor{
         return "DoorNextClosed";
     }
 
-
+    @Override
+    public boolean canWalk(){
+        return false;
+    };
 }

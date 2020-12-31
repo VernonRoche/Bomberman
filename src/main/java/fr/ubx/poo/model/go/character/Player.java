@@ -57,6 +57,14 @@ public class Player extends GameObject implements Movable {
 
     public void setLives(int lives) { this.lives = lives; }
 
+    public void setWinner(boolean winner) { this.winner = winner; }
+
+    public void setNb_bomb(int nb_bomb) { this.nb_bomb = nb_bomb; }
+
+    public void setRange_bomb(int range_bomb) { this.range_bomb = range_bomb; }
+
+    public void setNb_key(int nb_key) { this.nb_key = nb_key; }
+
     public void requestMove(Direction direction) {
         if (direction != this.direction) {
             this.direction = direction;
@@ -75,10 +83,18 @@ public class Player extends GameObject implements Movable {
             return false;
         }
 
-        World map = game.getWorld();
-        Decor decor=game.getWorld().get(nextPos);
+        //World map = game.getWorld();
+        Decor decor = game.getWorld().get(nextPos);
 
-        if (decor instanceof Stone || decor instanceof Tree){
+        if (decor.canWalk()){
+            return decor.take(game, nextPos);
+        }
+        if(decor.isBox()){
+            return moveBox(nextPos);
+        }
+        return false;
+
+        /*if (decor instanceof Stone || decor instanceof Tree){
             return false;
         }
         if (decor instanceof Box){
@@ -127,7 +143,7 @@ public class Player extends GameObject implements Movable {
                 map.set(nextPos, new DoorNextOpened());
                 nb_key=nb_key-1;
             }*/
-            return false;
+            /*return false;
         }
         if (decor instanceof DoorNextOpened){
             //nextlevel
@@ -135,7 +151,7 @@ public class Player extends GameObject implements Movable {
             return true;
         }
         //System.out.println("FLOOR");
-        return true;
+        return true;*/
     }
 
     public void doMove(Direction direction) {
