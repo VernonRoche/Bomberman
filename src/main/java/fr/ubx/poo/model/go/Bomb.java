@@ -59,8 +59,6 @@ public class Bomb extends GameObject{
         if(end_y > game.getWorld().getDimension().getHeight()) end_y = game.getWorld().getDimension().getHeight();
 
         for(int xAxis = position.x; start_x <= xAxis; xAxis--){
-            System.out.println(xAxis);
-            System.out.println(start_x);
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
@@ -132,7 +130,7 @@ public class Bomb extends GameObject{
             }
         }
 
-        for(int yAxis = position.x; yAxis < end_x; yAxis++){
+        for(int yAxis = position.y; yAxis < end_x; yAxis++){
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
