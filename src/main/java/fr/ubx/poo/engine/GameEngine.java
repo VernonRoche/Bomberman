@@ -61,8 +61,10 @@ public final class GameEngine {
         int width = game.getWorld().dimension.width;
         int sceneWidth = width * Sprite.size;
         int sceneHeight = height * Sprite.size;
+
         Scene scene = new Scene(root, sceneWidth, sceneHeight + StatusBar.height);
         scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
+        scene.setFill(Color.web("#DEB887"));
 
         stage.setTitle(windowTitle);
         stage.setScene(scene);
