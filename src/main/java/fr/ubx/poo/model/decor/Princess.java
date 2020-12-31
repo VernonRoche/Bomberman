@@ -14,4 +14,7 @@ public class Princess extends Decor{
         game.getPlayer().setWinner(true);
         return true;
     }
+
+    @Override
+    public boolean canExplode(){ return false; }
 }

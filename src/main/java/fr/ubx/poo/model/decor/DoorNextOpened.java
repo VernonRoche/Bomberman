@@ -5,4 +5,7 @@ public class DoorNextOpened extends Decor{
     public String toString() {
         return "DoorNextOpen";
     }
+
+    @Override
+    public boolean canExplode(){ return false; }
 }

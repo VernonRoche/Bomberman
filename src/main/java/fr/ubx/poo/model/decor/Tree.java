@@ -15,4 +15,7 @@ public class Tree extends Decor {
     public boolean canWalk(){
         return false;
     };
+
+    @Override
+    public boolean canExplode(){ return false; }
 }

@@ -10,4 +10,7 @@ public class DoorNextClosed extends Decor{
     public boolean canWalk(){
         return false;
     };
+
+    @Override
+    public boolean canExplode(){ return false; }
 }

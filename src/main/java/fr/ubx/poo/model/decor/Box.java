@@ -14,6 +14,5 @@ public class Box extends Decor{
     @Override
     public boolean isBox() { return true; }
 
-    @Override
-    public boolean canExplode() { return true; }
+
 }

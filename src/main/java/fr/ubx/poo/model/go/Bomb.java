@@ -58,18 +58,20 @@ public class Bomb extends GameObject{
         int end_y = position.y + this.range;
         if(end_y > game.getWorld().getDimension().getHeight()) end_y = game.getWorld().getDimension().getHeight();
 
-        for(int xAxis = position.x; start_x < xAxis; xAxis--){
-            if (playerPosition.x==start_x && playerPosition.y==position.y){
+        for(int xAxis = position.x; start_x <= xAxis; xAxis--){
+            System.out.println(xAxis);
+            System.out.println(start_x);
+            if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
             for (Monster mons: game.getMonster()){
-                if (mons.getPosition().x==start_x && mons.getPosition().y==position.y){
+                if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
                 }
             }
-            Position nextPos = new Position(start_x, position.y);
-            if(map.get(nextPos).canExplode()){                     //on teste si le décor peut exploser
-                if (nextPos.inside(game.getWorld().dimension)) {   //on teste si le décor est dans les dimensions (éviter la statusbar)
+            Position nextPos = new Position(xAxis, position.y);
+            if (nextPos.inside(game.getWorld().dimension)) {            //on teste si le décor est dans les dimensions (éviter la statusbar)
+                if(map.get(nextPos).canExplode()){                     //on teste si le décor peut exploser
                     if(map.get(nextPos).isBox()){                  //si le décor est une box on le détruit et ne propage pas l'explosion
                         map.clear(nextPos);
                         break;
@@ -92,8 +94,8 @@ public class Bomb extends GameObject{
                 }
             }
             Position nextPos = new Position(xAxis, position.y);
-            if(map.get(nextPos).canExplode()){
-                if (nextPos.inside(game.getWorld().dimension)) {
+            if (nextPos.inside(game.getWorld().dimension)) {
+                if(map.get(nextPos).canExplode()){
                     if(map.get(nextPos).isBox()){
                         map.clear(nextPos);
                         break;
@@ -107,17 +109,17 @@ public class Bomb extends GameObject{
         }
 
         for(int yAxis = position.y; start_y < yAxis; yAxis--){
-            if (playerPosition.y==start_y && playerPosition.x==position.x){
+            if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
             for (Monster mons: game.getMonster()){
-                if (mons.getPosition().y==start_y && mons.getPosition().x==position.x){
+                if (mons.getPosition().y==yAxis && mons.getPosition().x==position.x){
                     mons.setLives(mons.getLives()-1);
                 }
             }
-            Position nextPos = new Position(position.x, start_y);
-            if(map.get(nextPos).canExplode()){
-                if (nextPos.inside(game.getWorld().dimension)) {
+            Position nextPos = new Position(position.x, yAxis);
+            if (nextPos.inside(game.getWorld().dimension)) {
+                if(map.get(nextPos).canExplode()){
                     if(map.get(nextPos).isBox()){
                         map.clear(nextPos);
                         break;
@@ -140,8 +142,8 @@ public class Bomb extends GameObject{
                 }
             }
             Position nextPos = new Position(position.x, yAxis);
-            if(map.get(nextPos).canExplode()){
-                if (nextPos.inside(game.getWorld().dimension)) {
+            if (nextPos.inside(game.getWorld().dimension)) {
+                if(map.get(nextPos).canExplode()){
                     if(map.get(nextPos).isBox()){
                         map.clear(nextPos);
                         break;

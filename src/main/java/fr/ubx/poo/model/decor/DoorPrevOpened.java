@@ -6,4 +6,7 @@ public class DoorPrevOpened extends Decor {
     public String toString() {
         return "DoorPrevOpened";
     }
+
+    @Override
+    public boolean canExplode(){ return false; }
 }

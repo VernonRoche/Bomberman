@@ -17,7 +17,7 @@ public class Decor extends Entity {
 
     public boolean isBox(){ return false; }
 
-    public boolean canExplode(){ return false; }
+    public boolean canExplode(){ return true; }
 
     public boolean take(Game game, Position nextPos){ return true; }
 }

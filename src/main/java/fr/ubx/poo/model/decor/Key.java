@@ -15,4 +15,7 @@ public class Key extends Decor{
         game.getPlayer().setNb_key(game.getPlayer().getNb_key() + 1);
         return true;
     }
+
+    @Override
+    public boolean canExplode(){ return false; }
 }
