@@ -17,6 +17,11 @@ public class SpriteMonster extends SpriteGameObject{
     @Override
     public void updateImage() {
         Monster monster = (Monster) go;
-        setImage(ImageFactory.getInstance().getMonster(monster.getDirection()));
+        if (monster.getLives()<=0){
+            setImage(null);
+        }
+        else{
+            setImage(ImageFactory.getInstance().getMonster(monster.getDirection()));
+        }
     }
 }
