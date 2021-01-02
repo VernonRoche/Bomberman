@@ -65,7 +65,7 @@ public class Game {
 
     public WorldEntity[][] loadWorldFromFile(int levelNumber, String path) throws IOException{
         Reader reader = new FileReader(path+"/level"+String.valueOf(levelNumber)+".txt");
-        WorldEntity[][] mapEntities = new WorldEntity[13][12];
+        WorldEntity[][] mapEntities = new WorldEntity[12][12];
 
         try(BufferedReader bufferedReader=new BufferedReader(reader)){
             String line=bufferedReader.readLine();
