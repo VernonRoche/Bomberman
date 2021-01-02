@@ -7,6 +7,7 @@ package fr.ubx.poo.game;
 import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.decor.Floor;
 import fr.ubx.poo.model.go.Bomb;
+import fr.ubx.poo.model.go.character.Monster;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,6 +21,7 @@ public class World {
     public final Dimension dimension;
     public boolean update = false; //
     private List<Bomb> placedBombs=new ArrayList<>();
+    private List<Monster> monsterList=new ArrayList<>();
 
     public World(WorldEntity[][] raw) {
         this.raw = raw;
@@ -89,6 +91,12 @@ public class World {
     public List<Bomb> getPlacedBombs(){
         return placedBombs;
     }
+
+    public List<Monster> getMonsterList(){
+        return monsterList;
+    }
+
+    public void addMonster(Monster monster){ monsterList.add(monster); }
 
     public WorldEntity[][] getRaw() { return raw; }
 

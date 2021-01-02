@@ -204,7 +204,7 @@ public class Player extends GameObject implements Movable {
         Decor decor=game.getWorld().get(position);
 
         List<Monster> monster;
-        monster = game.getMonster();
+        monster = game.getWorld().getMonsterList();
         for(Monster mons: monster){
             if(mons.getPosition().x == position.x && mons.getPosition().y == position.y){
                 return false;

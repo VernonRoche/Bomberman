@@ -23,7 +23,6 @@ public class Game {
     private final String worldPath;
     public int initPlayerLives;
 
-    private List<Monster> monster = new ArrayList<>();
 
     public Game(String worldPath) {
         world = new WorldStatic();
@@ -36,7 +35,7 @@ public class Game {
             player = new Player(this, positionPlayer);
             positionMonster = world.findMonster();
             for(Position pos : positionMonster)
-                monster.add(new Monster(this, pos));
+                world.getMonsterList().add(new Monster(this, pos));
         } catch (PositionNotFoundException e) {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -66,5 +65,5 @@ public class Game {
         return this.player;
     }
 
-    public List<Monster> getMonster() { return monster; }
+
 }

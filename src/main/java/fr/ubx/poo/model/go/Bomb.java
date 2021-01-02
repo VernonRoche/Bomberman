@@ -62,7 +62,7 @@ public class Bomb extends GameObject{
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getMonster()){
+            for (Monster mons: game.getWorld().getMonsterList()){
                 if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
                 }
@@ -86,7 +86,7 @@ public class Bomb extends GameObject{
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getMonster()){
+            for (Monster mons: game.getWorld().getMonsterList()){
                 if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
                 }
@@ -110,7 +110,7 @@ public class Bomb extends GameObject{
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getMonster()){
+            for (Monster mons: game.getWorld().getMonsterList()){
                 if (mons.getPosition().y==yAxis && mons.getPosition().x==position.x){
                     mons.setLives(mons.getLives()-1);
                 }
@@ -134,7 +134,7 @@ public class Bomb extends GameObject{
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getMonster()){
+            for (Monster mons: game.getWorld().getMonsterList()){
                 if (mons.getPosition().y==yAxis && mons.getPosition().x==position.x){
                     mons.setLives(mons.getLives()-1);
                 }

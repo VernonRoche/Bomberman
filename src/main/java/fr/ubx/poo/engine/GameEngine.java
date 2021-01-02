@@ -40,14 +40,12 @@ public final class GameEngine {
     private Sprite spritePlayer;
     private List<Sprite> spriteBombs= new ArrayList<>();
 
-    private List<Sprite> spriteMonster = new ArrayList<>();
-    private final List<Monster> monster;
+    private List<Sprite> spriteMonsterList = new ArrayList<>();
 
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
         this.game = game;
         this.player = game.getPlayer();
-        this.monster = game.getMonster();
         initialize(stage, game);
         buildAndSetGameLoop();
     }
@@ -77,8 +75,8 @@ public final class GameEngine {
         // Create decor sprites
         game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
-        for(Monster mons: monster)
-            spriteMonster.add(SpriteFactory.createMonster(layer, mons));
+        for(Monster monster: game.getWorld().getMonsterList())
+            spriteMonsterList.add(SpriteFactory.createMonster(layer, monster));
     }
 
     protected final void buildAndSetGameLoop() {
@@ -146,19 +144,19 @@ public final class GameEngine {
 
     private void update(long now){
         player.update(now);
-        for(Monster mons: monster)
-            mons.update(now, 1000);
+        for(Monster monster: game.getWorld().getMonsterList())
+            monster.update(now, 1000);
 
-        for(Monster mons: monster){
-            if(player.getPosition().x == mons.getPosition().x && player.getPosition().y == mons.getPosition().y){
+        for(Monster monster: game.getWorld().getMonsterList()){
+            if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
                 player.hurt();
             }
         }
 
-        for(Monster mons: monster){
-            if (mons.getLives()==0){
-                monster.remove(mons);
-                spriteMonster.remove(mons);
+        for(Monster monster: game.getWorld().getMonsterList()){
+            if (monster.getLives()==0){
+                game.getWorld().getMonsterList().remove(monster);
+                spriteMonsterList.remove(monster);
             }
         }
 
@@ -222,7 +220,7 @@ public final class GameEngine {
         sprites.forEach(Sprite::render);
         spriteBombs.forEach(Sprite::render);
         // last rendering to have player in the foreground
-        for(Sprite spriteMons: spriteMonster)
+        for(Sprite spriteMons: spriteMonsterList)
             spriteMons.render();
         spritePlayer.render();
     }
