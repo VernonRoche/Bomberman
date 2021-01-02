@@ -1,5 +1,7 @@
 package fr.ubx.poo.game;
 
+import java.io.IOException;
+
 import static fr.ubx.poo.game.WorldEntity.*;
 
 public class WorldStatic extends World {

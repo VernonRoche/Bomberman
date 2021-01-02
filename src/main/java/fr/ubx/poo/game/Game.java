@@ -8,10 +8,7 @@ package fr.ubx.poo.game;
 import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -24,8 +21,9 @@ public class Game {
     public int initPlayerLives;
 
 
-    public Game(String worldPath) {
-        world = new WorldStatic();
+    public Game(String worldPath) throws IOException{
+        world=new World(loadWorldFromFile(1, worldPath));
+        //world = new WorldStatic();
         this.worldPath = worldPath;
         loadConfig(worldPath);
         Position positionPlayer = null;
@@ -63,6 +61,31 @@ public class Game {
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public WorldEntity[][] loadWorldFromFile(int levelNumber, String path) throws IOException{
+        Reader reader = new FileReader(path+"/level"+String.valueOf(levelNumber)+".txt");
+        WorldEntity[][] mapEntities = new WorldEntity[13][12];
+
+        try(BufferedReader bufferedReader=new BufferedReader(reader)){
+            String line=bufferedReader.readLine();
+            int lineNumber=0;
+            while(line!=null){
+                //on lit chaque ligne et on construit le tableau WorldEntity[][]
+                System.out.println(line);
+                for(int x=0; x<line.length(); x++) {
+                    if (WorldEntity.fromCode(line.charAt(x)).isPresent())
+                        mapEntities[lineNumber][x] = WorldEntity.fromCode(line.charAt(x)).get();
+                }
+                line=bufferedReader.readLine();
+                lineNumber++;
+            }
+            return mapEntities;
+
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return mapEntities;
     }
 
 
