@@ -23,6 +23,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -144,6 +145,19 @@ public final class GameEngine {
 
     private void update(long now){
         player.update(now);
+        /*for(Monster monster: game.getWorld().getMonsterList()){
+            if (monster.getLives()==0){
+                game.getWorld().getMonsterList().remove(monster);
+                spriteMonsterList.remove(monster);
+            }
+        }*/
+        for(int x=0; x<game.getWorld().getMonsterList().size(); x++){
+            if (game.getWorld().getMonsterList().get(x).getLives()==0){
+                game.getWorld().getMonsterList().remove(game.getWorld().getMonsterList().get(x));
+                spriteMonsterList.remove(spriteMonsterList.get(x));
+            }
+        }
+
         for(Monster monster: game.getWorld().getMonsterList())
             monster.update(now, 1000);
 
@@ -153,12 +167,7 @@ public final class GameEngine {
             }
         }
 
-        for(Monster monster: game.getWorld().getMonsterList()){
-            if (monster.getLives()==0){
-                game.getWorld().getMonsterList().remove(monster);
-                spriteMonsterList.remove(monster);
-            }
-        }
+
 
         if(game.getWorld().update) {
             /*for(int x=0 ; x<sprites.size() ; x++){
