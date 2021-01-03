@@ -230,6 +230,7 @@ public final class GameEngine {
                     game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath())));
                     game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
                     game.getWorlds().add(game.getCurrentWorld());
+                    showNextLevel(new Stage(), this.game);
                     game.hasRequestedLevelChange=false;
                 }
             }
@@ -243,6 +244,38 @@ public final class GameEngine {
             gameLoop.stop();
             showMessage("Gagné", Color.BLUE);
         }
+    }
+
+    private void showNextLevel(Stage stage, Game game){
+        this.stage.close();
+        this.spriteBombs.clear();
+        this.sprites.clear();
+        this.spriteMonsterList.clear();
+        Group root = new Group();
+        layer = new Pane();
+
+        int height = game.getCurrentWorld().dimension.height;
+        int width = game.getCurrentWorld().dimension.width;
+        int sceneWidth = width * Sprite.size;
+        int sceneHeight = height * Sprite.size;
+
+        Scene scene = new Scene(root, sceneWidth, sceneHeight + StatusBar.height);
+        scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
+        scene.setFill(Color.web("#DEB887"));
+
+        stage.setTitle(windowTitle);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        input = new Input(scene);
+        root.getChildren().add(layer);
+        statusBar = new StatusBar(root, sceneWidth, sceneHeight, game);
+        // Create decor sprites
+        game.getCurrentWorld().forEach( (pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
+        spritePlayer = SpriteFactory.createPlayer(layer, player);
+        for(Monster monster: game.getCurrentWorld().getMonsterList())
+            spriteMonsterList.add(SpriteFactory.createMonster(layer, monster));
     }
 
     private void render() {
