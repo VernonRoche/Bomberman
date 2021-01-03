@@ -65,7 +65,10 @@ public class Game {
 
     public WorldEntity[][] loadWorldFromFile(int levelNumber, String path) throws IOException{
         Reader reader = new FileReader(path+"/level"+String.valueOf(levelNumber)+".txt");
-        WorldEntity[][] mapEntities = new WorldEntity[12][12];
+        //initialisation du tableau en fonction des lignes (0) et des lettres (1) du fichier
+        int[] linesAndNumbers=getLinesAndWordsFile(levelNumber,path);
+        WorldEntity[][] mapEntities = new WorldEntity[linesAndNumbers[0]][linesAndNumbers[1]];
+        System.out.println(linesAndNumbers);
 
         try(BufferedReader bufferedReader=new BufferedReader(reader)){
             String line=bufferedReader.readLine();
@@ -80,12 +83,42 @@ public class Game {
                 line=bufferedReader.readLine();
                 lineNumber++;
             }
+            bufferedReader.close();
             return mapEntities;
-
         }catch (IOException e){
             System.out.println(e);
         }
-        return mapEntities;
+        reader.close();
+        return null;
+    }
+
+    public int[] getLinesAndWordsFile(int levelNumber, String path) throws IOException{
+        Reader reader = new FileReader(path+"/level"+String.valueOf(levelNumber)+".txt");
+        try(BufferedReader bufferedReader=new BufferedReader(reader)) {
+            String line = bufferedReader.readLine();
+            int lineNumber = 0;
+            int wordCount = 0;
+            while (line != null) {
+                if (lineNumber > 0) {
+
+                } else {
+                    for (int x = 0; x < line.length(); x++) {
+                        wordCount++;
+                    }
+
+                }
+                line= bufferedReader.readLine();
+                lineNumber++;
+            }
+            int[] linesAndWords={lineNumber,wordCount};
+            bufferedReader.close();
+            System.out.println(linesAndWords);
+            return linesAndWords;
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        reader.close();
+        return null;
     }
 
 
