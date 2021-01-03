@@ -18,7 +18,7 @@ public class Bomb extends GameObject{
     }
 
     public void bombExplode(Position position){
-        World map = game.getWorld();
+        World map = game.getCurrentWorld();
         map.clear(position);
         Position playerPosition=game.getPlayer().getPosition();
         /*for(int xAxis= position.x-range; xAxis< position.x+range;xAxis++){
@@ -50,25 +50,25 @@ public class Bomb extends GameObject{
         if(start_x < 0) start_x = 0;
 
         int end_x = position.x + this.range;
-        if(end_x > game.getWorld().getDimension().getWidth()) end_x = game.getWorld().getDimension().getWidth();
+        if(end_x > game.getCurrentWorld().getDimension().getWidth()) end_x = game.getCurrentWorld().getDimension().getWidth();
 
         int start_y = position.y - this.range;
         if(start_y < 0) start_y = 0;
 
         int end_y = position.y + this.range;
-        if(end_y > game.getWorld().getDimension().getHeight()) end_y = game.getWorld().getDimension().getHeight();
+        if(end_y > game.getCurrentWorld().getDimension().getHeight()) end_y = game.getCurrentWorld().getDimension().getHeight();
 
         for(int xAxis = position.x; start_x <= xAxis; xAxis--){
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getWorld().getMonsterList()){
+            for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
                 }
             }
             Position nextPos = new Position(xAxis, position.y);
-            if (nextPos.inside(game.getWorld().dimension)) {            //on teste si le décor est dans les dimensions (éviter la statusbar)
+            if (nextPos.inside(game.getCurrentWorld().dimension)) {            //on teste si le décor est dans les dimensions (éviter la statusbar)
                 if(map.get(nextPos).canExplode()){                     //on teste si le décor peut exploser
                     if(map.get(nextPos).isBox()){                  //si le décor est une box on le détruit et ne propage pas l'explosion
                         map.clear(nextPos);
@@ -86,13 +86,13 @@ public class Bomb extends GameObject{
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getWorld().getMonsterList()){
+            for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
                 }
             }
             Position nextPos = new Position(xAxis, position.y);
-            if (nextPos.inside(game.getWorld().dimension)) {
+            if (nextPos.inside(game.getCurrentWorld().dimension)) {
                 if(map.get(nextPos).canExplode()){
                     if(map.get(nextPos).isBox()){
                         map.clear(nextPos);
@@ -110,13 +110,13 @@ public class Bomb extends GameObject{
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getWorld().getMonsterList()){
+            for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().y==yAxis && mons.getPosition().x==position.x){
                     mons.setLives(mons.getLives()-1);
                 }
             }
             Position nextPos = new Position(position.x, yAxis);
-            if (nextPos.inside(game.getWorld().dimension)) {
+            if (nextPos.inside(game.getCurrentWorld().dimension)) {
                 if(map.get(nextPos).canExplode()){
                     if(map.get(nextPos).isBox()){
                         map.clear(nextPos);
@@ -134,13 +134,13 @@ public class Bomb extends GameObject{
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
-            for (Monster mons: game.getWorld().getMonsterList()){
+            for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().y==yAxis && mons.getPosition().x==position.x){
                     mons.setLives(mons.getLives()-1);
                 }
             }
             Position nextPos = new Position(position.x, yAxis);
-            if (nextPos.inside(game.getWorld().dimension)) {
+            if (nextPos.inside(game.getCurrentWorld().dimension)) {
                 if(map.get(nextPos).canExplode()){
                     if(map.get(nextPos).isBox()){
                         map.clear(nextPos);

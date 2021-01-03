@@ -16,7 +16,7 @@ public class BombNumberDec extends Decor {
     public boolean take(Game game, Position nextPos){
         if(game.getPlayer().getNb_bomb() == 0)
             return true;
-        game.getWorld().clear(nextPos);
+        game.getCurrentWorld().clear(nextPos);
         game.getPlayer().setNb_bomb(game.getPlayer().getNb_bomb() - 1);
         return true;
     }

@@ -14,7 +14,7 @@ public class BombRangeInc extends Decor {
 
     @Override
     public boolean take(Game game, Position nextPos){
-        game.getWorld().clear(nextPos);
+        game.getCurrentWorld().clear(nextPos);
         game.getPlayer().setRange_bomb(game.getPlayer().getRange_bomb() + 1);
         return true;
     }

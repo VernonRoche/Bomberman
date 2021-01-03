@@ -79,12 +79,12 @@ public class Player extends GameObject implements Movable {
     @Override
     public boolean canMove(Direction direction) {
         Position nextPos=direction.nextPosition(getPosition());
-        if (!nextPos.inside(game.getWorld().dimension)){
+        if (!nextPos.inside(game.getCurrentWorld().dimension)){
             return false;
         }
 
         //World map = game.getWorld();
-        Decor decor = game.getWorld().get(nextPos);
+        Decor decor = game.getCurrentWorld().get(nextPos);
 
         if (decor.canWalk()){
             return decor.take(game, nextPos);
@@ -164,7 +164,7 @@ public class Player extends GameObject implements Movable {
         if (this.nb_bomb > 0) {
             //System.out.println("PLACING BOMB");
             this.nb_bomb = this.nb_bomb - 1;
-            game.getWorld().addBombWorld(new Bomb(game,getPosition(),getRange_bomb(), now));
+            game.getCurrentWorld().addBombWorld(new Bomb(game,getPosition(),getRange_bomb(), now));
         }
         this.bombRequested=false;
     }
@@ -201,10 +201,10 @@ public class Player extends GameObject implements Movable {
     }
 
     public boolean canMoveBox(Position position){
-        Decor decor=game.getWorld().get(position);
+        Decor decor=game.getCurrentWorld().get(position);
 
         List<Monster> monster;
-        monster = game.getWorld().getMonsterList();
+        monster = game.getCurrentWorld().getMonsterList();
         for(Monster mons: monster){
             if(mons.getPosition().x == position.x && mons.getPosition().y == position.y){
                 return false;
@@ -218,7 +218,7 @@ public class Player extends GameObject implements Movable {
     }
 
     public boolean moveBox(Position nextPos){
-        World map = game.getWorld();
+        World map = game.getCurrentWorld();
         switch (getDirection()){
             case E:
                 Position creationPosE=new Position(nextPos.x+1, nextPos.y);
@@ -284,9 +284,9 @@ public class Player extends GameObject implements Movable {
 
     public void requestKey(){
         Position nextPos = direction.nextPosition(getPosition());
-        World map = game.getWorld();
+        World map = game.getCurrentWorld();
 
-        if (nb_key>0 && game.getWorld().getRaw()[nextPos.y][nextPos.x] == DoorNextClosed){
+        if (nb_key>0 && game.getCurrentWorld().getRaw()[nextPos.y][nextPos.x] == DoorNextClosed){
             map.set(nextPos, new DoorNextOpened());
             nb_key=nb_key-1;
         }

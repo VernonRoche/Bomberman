@@ -43,10 +43,10 @@ public class Monster extends GameObject implements Movable {
     @Override
     public boolean canMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
-        if (!nextPos.inside(game.getWorld().dimension)) {
+        if (!nextPos.inside(game.getCurrentWorld().dimension)) {
             return false;
         }
-        Decor decor = game.getWorld().get(nextPos);
+        Decor decor = game.getCurrentWorld().get(nextPos);
         return decor.canWalk();
     }
 

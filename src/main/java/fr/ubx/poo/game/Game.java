@@ -15,25 +15,28 @@ import java.util.Properties;
 
 public class Game {
 
-    private final World world;
+    private List<World> worlds= new ArrayList<>();
+    private final World currentWorld;
     private final Player player;
     private final String worldPath;
     public int initPlayerLives;
+    private int currentLevel=1;
 
 
     public Game(String worldPath) throws IOException{
-        world=new World(loadWorldFromFile(1, worldPath));
+        currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath));
+        worlds.add(currentWorld);
         //world = new WorldStatic();
         this.worldPath = worldPath;
         loadConfig(worldPath);
         Position positionPlayer = null;
         List<Position> positionMonster = new ArrayList<>();
         try {
-            positionPlayer = world.findPlayer();
+            positionPlayer = currentWorld.findPlayer();
             player = new Player(this, positionPlayer);
-            positionMonster = world.findMonster();
+            positionMonster = currentWorld.findMonster();
             for(Position pos : positionMonster)
-                world.getMonsterList().add(new Monster(this, pos));
+                currentWorld.getMonsterList().add(new Monster(this, pos));
         } catch (PositionNotFoundException e) {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -55,12 +58,20 @@ public class Game {
         }
     }
 
-    public World getWorld() {
-        return world;
+    public World getCurrentWorld() {
+        return currentWorld;
     }
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public int getCurrentLevel(){
+        return this.currentLevel;
+    }
+
+    public void setCurrentLevel(int level){
+        this.currentLevel=level;
     }
 
     public WorldEntity[][] loadWorldFromFile(int levelNumber, String path) throws IOException{

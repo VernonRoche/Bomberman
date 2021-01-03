@@ -23,7 +23,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -56,8 +55,8 @@ public final class GameEngine {
         Group root = new Group();
         layer = new Pane();
 
-        int height = game.getWorld().dimension.height;
-        int width = game.getWorld().dimension.width;
+        int height = game.getCurrentWorld().dimension.height;
+        int width = game.getCurrentWorld().dimension.width;
         int sceneWidth = width * Sprite.size;
         int sceneHeight = height * Sprite.size;
 
@@ -74,9 +73,9 @@ public final class GameEngine {
         root.getChildren().add(layer);
         statusBar = new StatusBar(root, sceneWidth, sceneHeight, game);
         // Create decor sprites
-        game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
+        game.getCurrentWorld().forEach( (pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
-        for(Monster monster: game.getWorld().getMonsterList())
+        for(Monster monster: game.getCurrentWorld().getMonsterList())
             spriteMonsterList.add(SpriteFactory.createMonster(layer, monster));
     }
 
@@ -151,17 +150,17 @@ public final class GameEngine {
                 spriteMonsterList.remove(monster);
             }
         }*/
-        for(int x=0; x<game.getWorld().getMonsterList().size(); x++){
-            if (game.getWorld().getMonsterList().get(x).getLives()==0){
-                game.getWorld().getMonsterList().remove(game.getWorld().getMonsterList().get(x));
+        for(int x = 0; x<game.getCurrentWorld().getMonsterList().size(); x++){
+            if (game.getCurrentWorld().getMonsterList().get(x).getLives()==0){
+                game.getCurrentWorld().getMonsterList().remove(game.getCurrentWorld().getMonsterList().get(x));
                 spriteMonsterList.remove(spriteMonsterList.get(x));
             }
         }
 
-        for(Monster monster: game.getWorld().getMonsterList())
+        for(Monster monster: game.getCurrentWorld().getMonsterList())
             monster.update(now, 1000);
 
-        for(Monster monster: game.getWorld().getMonsterList()){
+        for(Monster monster: game.getCurrentWorld().getMonsterList()){
             if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
                 player.hurt();
             }
@@ -169,7 +168,7 @@ public final class GameEngine {
 
 
 
-        if(game.getWorld().update) {
+        if(game.getCurrentWorld().update) {
             /*for(int x=0 ; x<sprites.size() ; x++){
                 if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
                     sprites.get(x).setImage(ImageFactory.getInstance().get(ImageResource.FLOOR));
@@ -188,28 +187,28 @@ public final class GameEngine {
             }*/
             sprites.forEach(sprite -> sprite.remove());
             sprites.clear();
-            game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
+            game.getCurrentWorld().forEach( (pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
 
-            game.getWorld().update = false;
+            game.getCurrentWorld().update = false;
         }
-        if (game.getWorld().getPlacedBombs().isEmpty()==false){
+        if (game.getCurrentWorld().getPlacedBombs().isEmpty()==false){
             //Ajouter les bombes manquantes dans les sprites
-            if(game.getWorld().getPlacedBombs().size()!=spriteBombs.size()){
-                for(int x=spriteBombs.size();x<game.getWorld().getPlacedBombs().size();x++){
-                        spriteBombs.add(SpriteFactory.createBombSprite(layer,game.getWorld().getPlacedBombs().get(x)));
+            if(game.getCurrentWorld().getPlacedBombs().size()!=spriteBombs.size()){
+                for(int x = spriteBombs.size(); x<game.getCurrentWorld().getPlacedBombs().size(); x++){
+                        spriteBombs.add(SpriteFactory.createBombSprite(layer,game.getCurrentWorld().getPlacedBombs().get(x)));
                 }
             }
             //Resolution du timer des bombes
-            for(int x=0;x<game.getWorld().getPlacedBombs().size();x++){
+            for(int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
                 //Explosion de bombe si now-le vieu now est egal au timer
-                if(game.getWorld().getPlacedBombs().get(x).getTimePassed()>=game.getWorld().getPlacedBombs().get(x).getBombTimer()){
-                    game.getWorld().getPlacedBombs().get(x).bombExplode(game.getWorld().getPlacedBombs().get(x).getPosition());
-                    game.getWorld().getPlacedBombs().remove(x);
+                if(game.getCurrentWorld().getPlacedBombs().get(x).getTimePassed()>=game.getCurrentWorld().getPlacedBombs().get(x).getBombTimer()){
+                    game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
+                    game.getCurrentWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);
                     //System.out.println(spriteBombs);
                 }
                 else{
-                    game.getWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getWorld().getPlacedBombs().get(x).getTimePlaced());
+                    game.getCurrentWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getCurrentWorld().getPlacedBombs().get(x).getTimePlaced());
 
                 }
             }
