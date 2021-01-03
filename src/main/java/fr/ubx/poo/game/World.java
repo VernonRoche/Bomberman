@@ -22,12 +22,17 @@ public class World {
     public boolean update = false; //
     private List<Bomb> placedBombs=new ArrayList<>();
     private List<Monster> monsterList=new ArrayList<>();
+    private int levelNumber;
 
     public World(WorldEntity[][] raw) {
         this.raw = raw;
         dimension = new Dimension(raw.length, raw[0].length);
         grid = WorldBuilder.build(raw, dimension);
     }
+
+    public int getLevelNumber(){ return this.levelNumber; }
+
+    public void setLevelNumber(int number){ this.levelNumber=number; }
 
     public Position findPlayer() throws PositionNotFoundException {
         for (int x = 0; x < dimension.width; x++) {

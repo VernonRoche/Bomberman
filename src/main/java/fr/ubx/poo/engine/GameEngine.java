@@ -6,6 +6,7 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.sprite.Sprite;
@@ -22,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +88,11 @@ public final class GameEngine {
                 processInput(now);
 
                 // Do actions
-                update(now);
+                try {
+                    update(now);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 // Graphic update
                 render();
@@ -142,7 +148,7 @@ public final class GameEngine {
     }
 
 
-    private void update(long now){
+    private void update(long now) throws IOException {
         player.update(now);
         /*for(Monster monster: game.getWorld().getMonsterList()){
             if (monster.getLives()==0){
@@ -210,6 +216,21 @@ public final class GameEngine {
                 else{
                     game.getCurrentWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getCurrentWorld().getPlacedBombs().get(x).getTimePlaced());
 
+                }
+            }
+        }
+        //on change de niveau
+        if (game.hasRequestedLevelChange){
+            if (game.getCurrentLevel()<game.getCurrentWorld().getLevelNumber()){
+                //on retourne en arriere
+            }
+            else{ //on va au niveau suivant
+                if (game.numberOfWorlds<game.getCurrentLevel()){}
+                else{
+                    game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath())));
+                    game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
+                    game.getWorlds().add(game.getCurrentWorld());
+                    game.hasRequestedLevelChange=false;
                 }
             }
         }

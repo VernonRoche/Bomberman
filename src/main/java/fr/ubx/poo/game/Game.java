@@ -16,15 +16,18 @@ import java.util.Properties;
 public class Game {
 
     private List<World> worlds= new ArrayList<>();
-    private final World currentWorld;
+    private World currentWorld;
     private final Player player;
     private final String worldPath;
+    public int numberOfWorlds;
     public int initPlayerLives;
     private int currentLevel=1;
+    public boolean hasRequestedLevelChange=false;
 
 
     public Game(String worldPath) throws IOException{
         currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath));
+        currentWorld.setLevelNumber(currentLevel);
         worlds.add(currentWorld);
         //world = new WorldStatic();
         this.worldPath = worldPath;
@@ -47,12 +50,15 @@ public class Game {
         return initPlayerLives;
     }
 
+    public String getWorldPath(){ return this.worldPath; }
+
     private void loadConfig(String path) {
         try (InputStream input = new FileInputStream(new File(path, "config.properties"))) {
             Properties prop = new Properties();
             // load the configuration file
             prop.load(input);
             initPlayerLives = Integer.parseInt(prop.getProperty("lives", "3"));
+            numberOfWorlds = Integer.parseInt(prop.getProperty("levels", "3"));
         } catch (IOException ex) {
             System.err.println("Error loading configuration");
         }
@@ -61,6 +67,10 @@ public class Game {
     public World getCurrentWorld() {
         return currentWorld;
     }
+
+    public void setCurrentWorld(World world){ this.currentWorld=world; }
+
+    public List<World> getWorlds(){ return this.worlds; }
 
     public Player getPlayer() {
         return this.player;
