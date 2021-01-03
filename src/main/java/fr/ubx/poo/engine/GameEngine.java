@@ -257,6 +257,7 @@ public final class GameEngine {
 
     private void showNextLevel(Stage stage, Game game, int exitingLevelNumber){
         this.stage.close();
+        this.stage=stage;
         this.spriteBombs.clear();
         this.sprites.clear();
         this.spriteMonsterList.clear();
