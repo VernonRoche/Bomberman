@@ -8,6 +8,7 @@ import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.decor.Floor;
 import fr.ubx.poo.model.go.Bomb;
 import fr.ubx.poo.model.go.character.Monster;
+import fr.ubx.poo.model.go.character.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -106,4 +107,6 @@ public class World {
     public WorldEntity[][] getRaw() { return raw; }
 
     public Dimension getDimension() { return dimension; }
+
+
 }

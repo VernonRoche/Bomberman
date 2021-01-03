@@ -94,64 +94,6 @@ public class Player extends GameObject implements Movable {
         }
         return false;
 
-        /*if (decor instanceof Stone || decor instanceof Tree){
-            return false;
-        }
-        if (decor instanceof Box){
-            return moveBox(nextPos);
-            //System.out.println("BOX");
-            //return false;
-        }
-        //voir si on est sur la princesse
-        if (decor instanceof Princess){
-            winner=true;
-        }
-        if (decor instanceof Heart){
-            map.clear(nextPos);
-            lives = lives +1;
-            return true;
-        }
-        if (decor instanceof BombNumberDec){
-            if(nb_bomb == 0) {return true;}
-            map.clear(nextPos);
-            nb_bomb = nb_bomb -1;
-            return true;
-        }
-        if (decor instanceof BombNumberInc){
-            map.clear(nextPos);
-            nb_bomb = nb_bomb +1;
-            return true;
-        }
-        if (decor instanceof BombRangeDec){
-            if(range_bomb == 1) {return true;}
-            map.clear(nextPos);
-            range_bomb = range_bomb -1;
-            return true;
-        }
-        if (decor instanceof BombRangeInc){
-            map.clear(nextPos);
-            range_bomb = range_bomb +1;
-            return true;
-        }
-        if (decor instanceof Key){
-            map.clear(nextPos);
-            nb_key = nb_key +1;
-            return true;
-        }
-        if (decor instanceof DoorNextClosed){
-            /*if (nb_key>0){
-                map.set(nextPos, new DoorNextOpened());
-                nb_key=nb_key-1;
-            }*/
-            /*return false;
-        }
-        if (decor instanceof DoorNextOpened){
-            //nextlevel
-
-            return true;
-        }
-        //System.out.println("FLOOR");
-        return true;*/
     }
 
     public void doMove(Direction direction) {
@@ -290,6 +232,26 @@ public class Player extends GameObject implements Movable {
             map.set(nextPos, new DoorNextOpened());
             nb_key=nb_key-1;
         }
+    }
+
+    public void movePlayerNextToDoor(Player player, Position position, int exitingLevelNumber){
+        if (!position.inside(this.game.getCurrentWorld().dimension)){ }
+        else{
+            Decor decor = this.game.getCurrentWorld().get(position);
+            //on regarde si on retourne a un niveau precedent ou suivant
+            if(this.game.getCurrentLevel()>exitingLevelNumber){//on passe au niveau suivant
+                if (decor.isPreviousDoor()){
+                    player.setPosition(position);
+                }
+            }
+            else{//on retourne a un niveau precedent
+                if (decor.isNextDoor()){
+                    player.setPosition(position);
+                }
+            }
+
+        }
+
     }
 
 }

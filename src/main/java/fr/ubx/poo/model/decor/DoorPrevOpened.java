@@ -19,4 +19,9 @@ public class DoorPrevOpened extends Decor {
         game.hasRequestedLevelChange=true;
         return true;
     }
+
+    @Override
+    public boolean isPreviousDoor() {
+        return true;
+    }
 }

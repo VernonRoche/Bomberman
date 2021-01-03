@@ -221,8 +221,17 @@ public final class GameEngine {
         }
         //on change de niveau
         if (game.hasRequestedLevelChange){
-            if (game.getCurrentLevel()<game.getCurrentWorld().getLevelNumber()){
-                //on retourne en arriere
+            int exitingLevelNumber=game.getCurrentWorld().getLevelNumber();
+            if (game.getCurrentLevel()<game.getCurrentWorld().getLevelNumber()){//on retourne en arriere
+                System.out.println("IM GETTING BACK");
+                for (World world: game.getWorlds()){
+                    if (world.getLevelNumber()==game.getCurrentLevel()){
+                        game.setCurrentWorld(world);
+                        showNextLevel(new Stage(), this.game, exitingLevelNumber);
+                        game.hasRequestedLevelChange=false;
+                    }
+                }
+
             }
             else{ //on va au niveau suivant
                 if (game.numberOfWorlds<game.getCurrentLevel()){}
@@ -230,7 +239,7 @@ public final class GameEngine {
                     game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath())));
                     game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
                     game.getWorlds().add(game.getCurrentWorld());
-                    showNextLevel(new Stage(), this.game);
+                    showNextLevel(new Stage(), this.game, exitingLevelNumber);
                     game.hasRequestedLevelChange=false;
                 }
             }
@@ -246,7 +255,7 @@ public final class GameEngine {
         }
     }
 
-    private void showNextLevel(Stage stage, Game game){
+    private void showNextLevel(Stage stage, Game game, int exitingLevelNumber){
         this.stage.close();
         this.spriteBombs.clear();
         this.sprites.clear();
@@ -273,10 +282,14 @@ public final class GameEngine {
         statusBar = new StatusBar(root, sceneWidth, sceneHeight, game);
         // Create decor sprites
         game.getCurrentWorld().forEach( (pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
+        // Bouger le joueur a cote de la porte ouverte
+        game.getCurrentWorld().forEach( ((position, decor) -> game.getPlayer().movePlayerNextToDoor(player, position, exitingLevelNumber)));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
         for(Monster monster: game.getCurrentWorld().getMonsterList())
             spriteMonsterList.add(SpriteFactory.createMonster(layer, monster));
     }
+
+
 
     private void render() {
         sprites.forEach(Sprite::render);
