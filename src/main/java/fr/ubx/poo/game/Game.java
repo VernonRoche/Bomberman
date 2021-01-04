@@ -89,14 +89,12 @@ public class Game {
         //initialisation du tableau en fonction des lignes (0) et des lettres (1) du fichier
         int[] linesAndNumbers=getLinesAndWordsFile(levelNumber,path);
         WorldEntity[][] mapEntities = new WorldEntity[linesAndNumbers[0]][linesAndNumbers[1]];
-        System.out.println(linesAndNumbers);
 
         try(BufferedReader bufferedReader=new BufferedReader(reader)){
             String line=bufferedReader.readLine();
             int lineNumber=0;
             while(line!=null){
                 //on lit chaque ligne et on construit le tableau WorldEntity[][]
-                System.out.println(line);
                 for(int x=0; x<line.length(); x++) {
                     if (WorldEntity.fromCode(line.charAt(x)).isPresent())
                         mapEntities[lineNumber][x] = WorldEntity.fromCode(line.charAt(x)).get();
@@ -133,7 +131,6 @@ public class Game {
             }
             int[] linesAndWords={lineNumber,wordCount};
             bufferedReader.close();
-            System.out.println(linesAndWords);
             return linesAndWords;
         }catch (IOException e){
             System.out.println(e);

@@ -163,8 +163,14 @@ public final class GameEngine {
             }
         }
 
-        for(Monster monster: game.getCurrentWorld().getMonsterList())
-            monster.update(now, 1000);
+        for (World world: game.getWorlds()){
+            for(Monster monster: world.getMonsterList()){
+                monster.update(now, 1000);
+                //System.out.println("MONSTER UPDATED");
+                //System.out.println(monster.getPosition());
+            }
+
+        }
 
         for(Monster monster: game.getCurrentWorld().getMonsterList()){
             if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
@@ -172,25 +178,7 @@ public final class GameEngine {
             }
         }
 
-
-
         if(game.getCurrentWorld().update) {
-            /*for(int x=0 ; x<sprites.size() ; x++){
-                if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) == null){
-                    sprites.get(x).setImage(ImageFactory.getInstance().get(ImageResource.FLOOR));
-                    //sprites.get(x).remove();
-                }
-                if(sprites.get(x) instanceof SpriteDoor && sprites.get(x) != null && game.getWorld().get(sprites.get(x).getPosition()) instanceof DoorNextOpened){
-                    ((SpriteDoor) sprites.get(x)).setOpen(true);
-                }
-                if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) !=null && game.getWorld().get(sprites.get(x).getPosition()) instanceof Box){
-                    ((SpriteDecor) sprites.get(x)).setIsBox(true);
-                }
-                if(sprites.get(x) instanceof SpriteDecor && sprites.get(x) !=null && game.getWorld().get(sprites.get(x).getPosition()) instanceof Floor){
-                    ((SpriteDecor) sprites.get(x)).setIsFloor(true);
-                }
-
-            }*/
             sprites.forEach(sprite -> sprite.remove());
             sprites.clear();
             game.getCurrentWorld().forEach( (pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
@@ -208,8 +196,6 @@ public final class GameEngine {
             for(int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
                 //Explosion de bombe si now-le vieu now est egal au timer
                 if(game.getCurrentWorld().getPlacedBombs().get(x).getTimePassed()>=game.getCurrentWorld().getPlacedBombs().get(x).getBombTimer()){
-                    System.out.println("BOMB EXPLODES");
-                    System.out.println(game.getCurrentWorld().getPlacedBombs());
                     game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
                     game.getCurrentWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);
