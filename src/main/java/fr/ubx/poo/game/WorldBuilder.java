@@ -25,7 +25,6 @@ public class WorldBuilder {
     }
 
     private static Decor processEntity(WorldEntity entity) {
-        System.out.println(entity);
         if (entity==null)
             return null;
         switch (entity) {

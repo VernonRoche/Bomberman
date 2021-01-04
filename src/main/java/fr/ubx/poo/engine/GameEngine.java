@@ -208,6 +208,8 @@ public final class GameEngine {
             for(int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
                 //Explosion de bombe si now-le vieu now est egal au timer
                 if(game.getCurrentWorld().getPlacedBombs().get(x).getTimePassed()>=game.getCurrentWorld().getPlacedBombs().get(x).getBombTimer()){
+                    System.out.println("BOMB EXPLODES");
+                    System.out.println(game.getCurrentWorld().getPlacedBombs());
                     game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
                     game.getCurrentWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);

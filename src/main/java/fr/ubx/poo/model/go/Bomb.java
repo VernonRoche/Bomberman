@@ -130,7 +130,7 @@ public class Bomb extends GameObject{
             }
         }
 
-        for(int yAxis = position.y; yAxis < end_x; yAxis++){
+        for(int yAxis = position.y; yAxis < end_y; yAxis++){
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
             }
