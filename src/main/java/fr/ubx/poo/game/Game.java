@@ -5,7 +5,6 @@
 package fr.ubx.poo.game;
 
 
-import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 
 import java.io.*;
@@ -26,20 +25,16 @@ public class Game {
 
 
     public Game(String worldPath) throws IOException{
-        currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath));
+        currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath), this);
         currentWorld.setLevelNumber(currentLevel);
         worlds.add(currentWorld);
         //world = new WorldStatic();
         this.worldPath = worldPath;
         loadConfig(worldPath);
         Position positionPlayer = null;
-        List<Position> positionMonster = new ArrayList<>();
         try {
             positionPlayer = currentWorld.findPlayer();
             player = new Player(this, positionPlayer);
-            positionMonster = currentWorld.findMonster();
-            for(Position pos : positionMonster)
-                currentWorld.getMonsterList().add(new Monster(this, pos));
         } catch (PositionNotFoundException e) {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);

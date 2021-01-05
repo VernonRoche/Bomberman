@@ -224,7 +224,7 @@ public final class GameEngine {
             else{ //on va au niveau suivant
                 if (game.numberOfWorlds<game.getCurrentLevel()){}
                 else{
-                    game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath())));
+                    game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath()), game));
                     game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
                     game.getWorlds().add(game.getCurrentWorld());
                     showNextLevel(new Stage(), this.game, exitingLevelNumber);

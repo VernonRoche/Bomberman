@@ -1,7 +1,5 @@
 package fr.ubx.poo.game;
 
-import java.io.IOException;
-
 import static fr.ubx.poo.game.WorldEntity.*;
 
 public class WorldStatic extends World {
@@ -21,7 +19,7 @@ public class WorldStatic extends World {
                     {Empty, DoorNextClosed, Empty, Empty, Empty, Empty, Empty, Empty, Monster, Empty, Empty, Empty},
                     {Empty, BombNumberDec, Empty, Empty, Empty, Empty, Empty, Empty, BombNumberInc, Empty, Empty, Princess}
             };
-    public WorldStatic() {
-        super(mapEntities);
+    public WorldStatic(Game game) {
+        super(mapEntities, game);
     }
 }

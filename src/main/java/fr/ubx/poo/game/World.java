@@ -8,7 +8,6 @@ import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.decor.Floor;
 import fr.ubx.poo.model.go.Bomb;
 import fr.ubx.poo.model.go.character.Monster;
-import fr.ubx.poo.model.go.character.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,10 +24,19 @@ public class World {
     private List<Monster> monsterList=new ArrayList<>();
     private int levelNumber;
 
-    public World(WorldEntity[][] raw) {
+    public World(WorldEntity[][] raw, Game game) {
         this.raw = raw;
         dimension = new Dimension(raw.length, raw[0].length);
         grid = WorldBuilder.build(raw, dimension);
+        List<Position> positionMonster = new ArrayList<>();
+        try {
+            positionMonster = findMonster();
+            for(Position pos : positionMonster)
+                getMonsterList().add(new Monster(game, pos));
+        } catch (PositionNotFoundException e) {
+            System.err.println("Position not found : " + e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public int getLevelNumber(){ return this.levelNumber; }
