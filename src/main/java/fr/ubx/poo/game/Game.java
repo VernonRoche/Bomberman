@@ -22,15 +22,16 @@ public class Game {
     public int initPlayerLives;
     private int currentLevel=1;
     public boolean hasRequestedLevelChange=false;
+    private String levelPrefix;
 
 
     public Game(String worldPath) throws IOException{
+        loadConfig(worldPath);
         currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath), this);
         currentWorld.setLevelNumber(currentLevel);
         worlds.add(currentWorld);
         //world = new WorldStatic();
         this.worldPath = worldPath;
-        loadConfig(worldPath);
         Position positionPlayer = null;
         try {
             positionPlayer = currentWorld.findPlayer();
@@ -54,6 +55,7 @@ public class Game {
             prop.load(input);
             initPlayerLives = Integer.parseInt(prop.getProperty("lives", "3"));
             numberOfWorlds = Integer.parseInt(prop.getProperty("levels", "3"));
+            levelPrefix =prop.getProperty("prefix", "level");
         } catch (IOException ex) {
             System.err.println("Error loading configuration");
         }
@@ -80,7 +82,7 @@ public class Game {
     }
 
     public WorldEntity[][] loadWorldFromFile(int levelNumber, String path) throws IOException{
-        Reader reader = new FileReader(path+"/level"+String.valueOf(levelNumber)+".txt");
+        Reader reader = new FileReader(path+"/"+levelPrefix+levelNumber+".txt");
         //initialisation du tableau en fonction des lignes (0) et des lettres (1) du fichier
         int[] linesAndNumbers=getLinesAndWordsFile(levelNumber,path);
         WorldEntity[][] mapEntities = new WorldEntity[linesAndNumbers[0]][linesAndNumbers[1]];
