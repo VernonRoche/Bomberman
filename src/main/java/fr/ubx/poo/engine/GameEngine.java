@@ -166,8 +166,7 @@ public final class GameEngine {
         for (World world: game.getWorlds()){
             for(Monster monster: world.getMonsterList()){
                 monster.update(now, 1000);
-                //System.out.println("MONSTER UPDATED");
-                //System.out.println(monster.getPosition());
+
             }
 
         }
