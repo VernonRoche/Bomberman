@@ -222,13 +222,25 @@ public final class GameEngine {
 
             }
             else{ //on va au niveau suivant
-                if (game.numberOfWorlds<game.getCurrentLevel()){}
+                if (game.numberOfWorlds<game.getCurrentLevel()){} //on verifie si on depasse le nombre de mondes max
                 else{
-                    game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath()), game));
-                    game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
-                    game.getWorlds().add(game.getCurrentWorld());
-                    showNextLevel(new Stage(), this.game, exitingLevelNumber);
-                    game.hasRequestedLevelChange=false;
+                    Boolean undiscoveredWorld=true;
+                    for (World world: game.getWorlds()){ //on verifie si on a deja explore ce monde
+                        if (game.getCurrentLevel()==world.getLevelNumber()){
+                            undiscoveredWorld=false;
+                            game.setCurrentWorld(world);
+                            showNextLevel(new Stage(), this.game, exitingLevelNumber);
+                            game.hasRequestedLevelChange=false;
+                            break;
+                        }
+                    }
+                    if (undiscoveredWorld){
+                        game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath()), game));
+                        game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
+                        game.getWorlds().add(game.getCurrentWorld());
+                        showNextLevel(new Stage(), this.game, exitingLevelNumber);
+                        game.hasRequestedLevelChange=false;
+                    }
                 }
             }
         }
