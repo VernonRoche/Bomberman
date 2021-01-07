@@ -163,13 +163,12 @@ public final class GameEngine {
             }
         }
 
-        for (World world: game.getWorlds()){
-            for(Monster monster: world.getMonsterList()){
+
+        for(Monster monster: game.getCurrentWorld().getMonsterList()){
                 monster.update(now, 1000);
-
-            }
-
         }
+
+
 
         for(Monster monster: game.getCurrentWorld().getMonsterList()){
             if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
