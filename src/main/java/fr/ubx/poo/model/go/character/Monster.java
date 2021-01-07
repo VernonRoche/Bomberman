@@ -113,41 +113,49 @@ public class Monster extends GameObject implements Movable {
         Decor decor;
         for (int x=this.getPosition().x; x<game.getCurrentWorld().getDimension().width; x++){
             decor=game.getCurrentWorld().get(new Position(x, this.getPosition().y));
-            if (!decor.canWalk()){
-                break;
-            }
-            if (playerPosition.x==x && playerPosition.y==this.getPosition().y){
-                return true;
+            if (decor==null){} else {
+                if (!decor.canWalk()) {
+                    break;
+                }
+                if (playerPosition.x == x && playerPosition.y == this.getPosition().y) {
+                    return true;
+                }
             }
         }
 
         for (int x=this.getPosition().x; x>0; x--){
             decor=game.getCurrentWorld().get(new Position(x, this.getPosition().y));
-            if (!decor.canWalk()){
-                break;
-            }
-            if (playerPosition.x==x && playerPosition.y==this.getPosition().y){
-                return true;
+            if (decor==null){} else {
+                if (!decor.canWalk()) {
+                    break;
+                }
+                if (playerPosition.x == x && playerPosition.y == this.getPosition().y) {
+                    return true;
+                }
             }
         }
 
         for (int y=this.getPosition().y; y<game.getCurrentWorld().getDimension().height; y++){
             decor=game.getCurrentWorld().get(new Position(y, this.getPosition().x));
-            if (!decor.canWalk()){
-                break;
-            }
-            if (playerPosition.y==y && playerPosition.x==this.getPosition().x){
-                return true;
+            if (decor==null){} else {
+                if (!decor.canWalk()) {
+                    break;
+                }
+                if (playerPosition.y == y && playerPosition.x == this.getPosition().x) {
+                    return true;
+                }
             }
         }
 
         for (int y=this.getPosition().y; y>0; y--){
             decor=game.getCurrentWorld().get(new Position(y, this.getPosition().x));
-            if (!decor.canWalk()){
-                break;
-            }
-            if (playerPosition.y==y && playerPosition.x==this.getPosition().x){
-                return true;
+            if (decor==null){} else {
+                if (!decor.canWalk()) {
+                    break;
+                }
+                if (playerPosition.y == y && playerPosition.x == this.getPosition().x) {
+                    return true;
+                }
             }
         }
         return false;
