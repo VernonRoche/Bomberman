@@ -27,8 +27,8 @@ public class Game {
 
     public Game(String worldPath) throws IOException{
         loadConfig(worldPath);
-        currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath), this);
-        currentWorld.setLevelNumber(currentLevel);
+        currentWorld =new World(loadWorldFromFile(this.currentLevel, worldPath), this, currentLevel);
+        //currentWorld.setLevelNumber(currentLevel);
         worlds.add(currentWorld);
         //world = new WorldStatic();
         this.worldPath = worldPath;
@@ -64,6 +64,8 @@ public class Game {
     public World getCurrentWorld() {
         return currentWorld;
     }
+
+    public World getWorld(int i) { return this.worlds.get(i); }
 
     public void setCurrentWorld(World world){ this.currentWorld=world; }
 

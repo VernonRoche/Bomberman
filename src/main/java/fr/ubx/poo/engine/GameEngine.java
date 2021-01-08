@@ -43,6 +43,7 @@ public final class GameEngine {
     private List<Sprite> spriteBombs= new ArrayList<>();
 
     private List<Sprite> spriteMonsterList = new ArrayList<>();
+    //private int nbRequest = 0;
 
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
@@ -164,11 +165,15 @@ public final class GameEngine {
         }
 
 
-        for(Monster monster: game.getCurrentWorld().getMonsterList()){
+        /*for(Monster monster: game.getCurrentWorld().getMonsterList()){
                 monster.update(now, 1000);
+        }*/
+        for(World world: game.getWorlds()){
+            for(Monster monster: world.getMonsterList()){
+                //System.out.println(monster.getLevel());
+                monster.update(now, 1000);
+            }
         }
-
-
 
         for(Monster monster: game.getCurrentWorld().getMonsterList()){
             if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
@@ -233,8 +238,8 @@ public final class GameEngine {
                         }
                     }
                     if (undiscoveredWorld){
-                        game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath()), game));
-                        game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
+                        game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath()), game, game.getCurrentLevel()));
+                        //game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
                         game.getWorlds().add(game.getCurrentWorld());
                         showNextLevel(new Stage(), this.game, exitingLevelNumber);
                         game.hasRequestedLevelChange=false;

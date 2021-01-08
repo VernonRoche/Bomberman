@@ -24,15 +24,16 @@ public class World {
     private List<Monster> monsterList=new ArrayList<>();
     private int levelNumber;
 
-    public World(WorldEntity[][] raw, Game game) {
+    public World(WorldEntity[][] raw, Game game, int levelNumber) {
         this.raw = raw;
+        this.levelNumber = levelNumber;
         dimension = new Dimension(raw.length, raw[0].length);
         grid = WorldBuilder.build(raw, dimension);
         List<Position> positionMonster = new ArrayList<>();
         try {
             positionMonster = findMonster();
             for(Position pos : positionMonster)
-                getMonsterList().add(new Monster(game, pos));
+                getMonsterList().add(new Monster(game, pos, levelNumber));
         } catch (PositionNotFoundException e) {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);

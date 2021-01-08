@@ -20,6 +20,6 @@ public class WorldStatic extends World {
                     {Empty, BombNumberDec, Empty, Empty, Empty, Empty, Empty, Empty, BombNumberInc, Empty, Empty, Princess}
             };
     public WorldStatic(Game game) {
-        super(mapEntities, game);
+        super(mapEntities, game, 1);
     }
 }

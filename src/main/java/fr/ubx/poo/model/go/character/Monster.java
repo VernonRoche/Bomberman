@@ -3,6 +3,7 @@ package fr.ubx.poo.model.go.character;
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
+import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.go.GameObject;
@@ -14,10 +15,16 @@ public class Monster extends GameObject implements Movable {
     private int lives = 1;
     private boolean is_move = true;
     private boolean hasDetectedPlayer=false;
+    private int level;
 
-    public Monster(Game game, Position position) {
+    public Monster(Game game, Position position, int level) {
         super(game, position);
         this.direction = Direction.S;
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public int getLives() {
@@ -45,11 +52,16 @@ public class Monster extends GameObject implements Movable {
 
     @Override
     public boolean canMove(Direction direction) {
+        World world = game.getWorld(this.level-1);
         Position nextPos = direction.nextPosition(getPosition());
-        if (!nextPos.inside(game.getCurrentWorld().dimension)) {
+        /*if (!nextPos.inside(game.getCurrentWorld().dimension)) {
+            return false;
+        }*/
+        if (!nextPos.inside(world.dimension)) {
             return false;
         }
-        Decor decor = game.getCurrentWorld().get(nextPos);
+        //Decor decor = game.getCurrentWorld().get(nextPos);
+        Decor decor = world.get(nextPos);
         return decor.canWalk();
     }
 
@@ -114,7 +126,7 @@ public class Monster extends GameObject implements Movable {
         for (int x=this.getPosition().x; x<game.getCurrentWorld().getDimension().width; x++){
             decor=game.getCurrentWorld().get(new Position(x, this.getPosition().y));
 
-                if (!decor.canWalk()) {
+                if (decor == null || !decor.canWalk()) {
                     break;
                 }
                 if (playerPosition.x == x && playerPosition.y == this.getPosition().y) {
@@ -126,7 +138,7 @@ public class Monster extends GameObject implements Movable {
         for (int x=this.getPosition().x; x>0; x--){
             decor=game.getCurrentWorld().get(new Position(x, this.getPosition().y));
 
-                if (!decor.canWalk()) {
+                if (decor == null || !decor.canWalk()) {
                     break;
                 }
                 if (playerPosition.x == x && playerPosition.y == this.getPosition().y) {
@@ -138,7 +150,7 @@ public class Monster extends GameObject implements Movable {
         for (int y=this.getPosition().y; y<game.getCurrentWorld().getDimension().height; y++){
             decor=game.getCurrentWorld().get(new Position(this.getPosition().x, y));
 
-                if (!decor.canWalk()) {
+                if (decor == null || !decor.canWalk()) {
                     break;
                 }
                 if (playerPosition.y == y && playerPosition.x == this.getPosition().x) {
@@ -150,7 +162,7 @@ public class Monster extends GameObject implements Movable {
         for (int y=this.getPosition().y; y>0; y--){
             decor=game.getCurrentWorld().get(new Position(this.getPosition().x, y));
 
-                if (!decor.canWalk()) {
+                if (decor == null || !decor.canWalk()) {
                     break;
                 }
                 if (playerPosition.y == y && playerPosition.x == this.getPosition().x) {
