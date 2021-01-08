@@ -10,6 +10,7 @@ public class Bomb extends GameObject{
     private long bombTimer=4;
     private long timePlaced;
     private long timePassed=0;
+    int lives = 1;
 
     public Bomb (Game game, Position position, int range, long timePlaced){
         super(game,position);
@@ -67,6 +68,11 @@ public class Bomb extends GameObject{
                     mons.setLives(mons.getLives()-1);
                 }
             }
+            for (Bomb bomb: game.getCurrentWorld().getPlacedBombs()){
+                if (bomb.getPosition().x == xAxis && bomb.getPosition().y == position.y){
+                    bomb.setLives(bomb.getLives() - 1);
+                }
+            }
             Position nextPos = new Position(xAxis, position.y);
             if (nextPos.inside(game.getCurrentWorld().dimension)) {            //on teste si le décor est dans les dimensions (éviter la statusbar)
                 if(map.get(nextPos).canExplode()){                     //on teste si le décor peut exploser
@@ -89,6 +95,11 @@ public class Bomb extends GameObject{
             for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
+                }
+            }
+            for (Bomb bomb: game.getCurrentWorld().getPlacedBombs()){
+                if (bomb.getPosition().x==xAxis && bomb.getPosition().y==position.y){
+                    bomb.setLives(bomb.getLives() - 1);
                 }
             }
             Position nextPos = new Position(xAxis, position.y);
@@ -115,6 +126,11 @@ public class Bomb extends GameObject{
                     mons.setLives(mons.getLives()-1);
                 }
             }
+            for (Bomb bomb: game.getCurrentWorld().getPlacedBombs()){
+                if (bomb.getPosition().y==yAxis && bomb.getPosition().x==position.x){
+                    bomb.setLives(bomb.getLives() - 1);
+                }
+            }
             Position nextPos = new Position(position.x, yAxis);
             if (nextPos.inside(game.getCurrentWorld().dimension)) {
                 if(map.get(nextPos).canExplode()){
@@ -137,6 +153,11 @@ public class Bomb extends GameObject{
             for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().y==yAxis && mons.getPosition().x==position.x){
                     mons.setLives(mons.getLives()-1);
+                }
+            }
+            for (Bomb bomb: game.getCurrentWorld().getPlacedBombs()){
+                if (bomb.getPosition().y==yAxis && bomb.getPosition().x==position.x){
+                    bomb.setLives(bomb.getLives() - 1);
                 }
             }
             Position nextPos = new Position(position.x, yAxis);
@@ -169,5 +190,13 @@ public class Bomb extends GameObject{
 
     public void setTimePassed(long time){
         this.timePassed=time;
+    }
+
+    public int getLives() {
+        return this.lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 }

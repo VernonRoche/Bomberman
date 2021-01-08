@@ -200,10 +200,17 @@ public final class GameEngine {
                 }
                 else{
                     game.getCurrentWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getCurrentWorld().getPlacedBombs().get(x).getTimePlaced());
-
                 }
             }
         }
+        //Supprimer les bombes qui en font exploser d'autres
+        for (int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
+            if(game.getCurrentWorld().getPlacedBombs().get(x).getLives() == 0){
+                game.getCurrentWorld().getPlacedBombs().remove(game.getCurrentWorld().getPlacedBombs().get(x));
+                spriteBombs.remove(spriteBombs.get(x));
+            }
+        }
+
         //on change de niveau
         if (game.hasRequestedLevelChange){
             int exitingLevelNumber=game.getCurrentWorld().getLevelNumber();
