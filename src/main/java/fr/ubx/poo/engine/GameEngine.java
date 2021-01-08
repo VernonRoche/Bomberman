@@ -206,6 +206,8 @@ public final class GameEngine {
         //Supprimer les bombes qui en font exploser d'autres
         for (int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
             if(game.getCurrentWorld().getPlacedBombs().get(x).getLives() == 0){
+                game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
+                game.getPlayer().setNb_bomb(game.getPlayer().getNb_bomb() + 1);
                 game.getCurrentWorld().getPlacedBombs().remove(game.getCurrentWorld().getPlacedBombs().get(x));
                 spriteBombs.remove(spriteBombs.get(x));
             }
