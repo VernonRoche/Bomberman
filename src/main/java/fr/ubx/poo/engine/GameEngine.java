@@ -41,9 +41,7 @@ public final class GameEngine {
     private Stage stage;
     private Sprite spritePlayer;
     private List<Sprite> spriteBombs= new ArrayList<>();
-
     private List<Sprite> spriteMonsterList = new ArrayList<>();
-    //private int nbRequest = 0;
 
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
@@ -164,13 +162,8 @@ public final class GameEngine {
             }
         }
 
-
-        /*for(Monster monster: game.getCurrentWorld().getMonsterList()){
-                monster.update(now, 1000);
-        }*/
         for(World world: game.getWorlds()){
             for(Monster monster: world.getMonsterList()){
-                //System.out.println(monster.getLevel());
                 monster.update(now, 1000);
             }
         }
@@ -202,6 +195,7 @@ public final class GameEngine {
                     game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
                     game.getCurrentWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);
+                    game.getPlayer().setNb_bomb(game.getPlayer().getNb_bomb() + 1);
                     //System.out.println(spriteBombs);
                 }
                 else{
