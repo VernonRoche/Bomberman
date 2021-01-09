@@ -12,6 +12,7 @@ public class BombRangeInc extends Decor {
     @Override
     public boolean canExplode() { return true; }
 
+    //On augmente la portee des bombes et on efface le bonus
     @Override
     public boolean take(Game game, Position nextPos){
         game.getCurrentWorld().clear(nextPos);

@@ -9,6 +9,7 @@ public class Princess extends Decor{
         return "Princess";
     }
 
+    //On gagne la partie en mettant la methode setWinner(true), qui se "trigger" quand on marche sur la princesse
     @Override
     public boolean take(Game game, Position nextPos){
         game.getPlayer().setWinner(true);

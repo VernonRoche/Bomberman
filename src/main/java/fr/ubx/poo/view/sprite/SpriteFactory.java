@@ -17,6 +17,7 @@ import static fr.ubx.poo.view.image.ImageResource.*;
 
 public final class SpriteFactory {
 
+    //Ici on charge en fonction du type de decor, le sprite qu'il faut creer
     public static Sprite createDecor(Pane layer, Position position, Decor decor) {
         ImageFactory factory = ImageFactory.getInstance();
         if (decor instanceof Floor)

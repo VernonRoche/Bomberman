@@ -14,6 +14,8 @@ public class SpriteMonster extends SpriteGameObject{
         updateImage();
     }
 
+    //On verifie si le monstre est mort, ou dans ce cas on enleve son image
+    //Sinon on l'affiche en fonction de sa direction
     @Override
     public void updateImage() {
         Monster monster = (Monster) go;

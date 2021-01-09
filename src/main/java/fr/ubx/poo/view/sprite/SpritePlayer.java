@@ -17,6 +17,7 @@ public class SpritePlayer extends SpriteGameObject {
         updateImage();
     }
 
+    //Ici on affiche le joueur en fonction de sa direction
     @Override
     public void updateImage() {
         Player player = (Player) go;

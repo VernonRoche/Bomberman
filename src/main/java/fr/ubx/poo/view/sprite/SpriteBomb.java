@@ -17,6 +17,8 @@ public class SpriteBomb extends SpriteGameObject{
         updateImage();
     }
 
+    //On verifie si la bombe a explose, et si oui on affiche l'image du sol car la bombe existe plus
+    //Sinon on recupere le temps passe depuis que la bombe est possee, pour afficher l'image correcte
     @Override
     public void updateImage() {
         if (hasExploded){

@@ -6,11 +6,11 @@ import fr.ubx.poo.game.World;
 import fr.ubx.poo.model.go.character.Monster;
 
 public class Bomb extends GameObject{
-    private int range=1;
-    private long bombTimer=4;
-    private long timePlaced;
-    private long timePassed=0;
-    int lives = 1;
+    private int range=1; //Portee de la bombe
+    private long bombTimer=4; //Le temps qu'il faut pour que le bombe explose
+    private long timePlaced; //L'heure exacte ou la bombe a ete placee
+    private long timePassed=0; //Le temps passe depuis que la bombe a ete placee
+    int lives = 1; //Nombre de vies de la bombe, utilise pour faire exploser d'autres bombes en reaction en chaine
 
     public Bomb (Game game, Position position, int range, long timePlaced){
         super(game,position);
@@ -22,31 +22,7 @@ public class Bomb extends GameObject{
         World map = game.getCurrentWorld();
         map.clear(position);
         Position playerPosition=game.getPlayer().getPosition();
-        /*for(int xAxis= position.x-range; xAxis< position.x+range;xAxis++){
-            if (playerPosition.x==xAxis && playerPosition.y==position.y){
-                    game.getPlayer().hurt();
-            }
-            for (Monster mons: game.getMonster()){
-                if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
-                    mons.setLives(mons.getLives()-1);
-                }
-            }
-            map.clear(new Position(xAxis, position.y));
-
-        }
-        for(int yAxis= position.y-range; yAxis< position.y+range;yAxis++){
-            if (playerPosition.y==yAxis && playerPosition.x==position.x){
-                    game.getPlayer().hurt();
-            }
-            for (Monster mons: game.getMonster()){
-                if (mons.getPosition().x==yAxis && mons.getPosition().y==position.x){
-                    mons.setLives(mons.getLives()-1);
-                }
-            }
-            map.clear(new Position(position.x, yAxis));
-
-        }*/
-
+        //Ici on va determiner les positions de debut et de fin d'explosion de la bombe, dans les axes X et Y
         int start_x = position.x - this.range;
         if(start_x < 0) start_x = 0;
 
@@ -59,15 +35,21 @@ public class Bomb extends GameObject{
         int end_y = position.y + this.range;
         if(end_y > game.getCurrentWorld().getDimension().getHeight()) end_y = game.getCurrentWorld().getDimension().getHeight();
 
+        //Dans les boucles suivante, on va iterer pour verifier si on doit endomager le joueur, un monstre, faire
+        //exploser une autre bombe, ou exploser un decor
+        //Les cases a gauche de la bombe
         for(int xAxis = position.x; start_x <= xAxis; xAxis--){
+            //On verifie si le joueur se trouve dans l'explosion et on l'endommage
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
             }
+            //On verifie si un monstre se trouve dans l'explosion et on l'endommage
             for (Monster mons: game.getCurrentWorld().getMonsterList()){
                 if (mons.getPosition().x==xAxis && mons.getPosition().y==position.y){
                     mons.setLives(mons.getLives()-1);
                 }
             }
+            //On verifie si on doit faire exploser une autre bombe et provoquer une reaction en chaine
             for (Bomb bomb: game.getCurrentWorld().getPlacedBombs()){
                 if (bomb.getPosition().x == xAxis && bomb.getPosition().y == position.y){
                     bomb.setLives(bomb.getLives() - 1);
@@ -88,6 +70,7 @@ public class Bomb extends GameObject{
             }
         }
 
+        //Les cases a droite de la bombe
         for(int xAxis = position.x; xAxis < end_x; xAxis++){
             if (playerPosition.x==xAxis && playerPosition.y==position.y){
                 game.getPlayer().hurt();
@@ -117,6 +100,7 @@ public class Bomb extends GameObject{
             }
         }
 
+        //Les cases en haut de la bombe
         for(int yAxis = position.y; start_y < yAxis; yAxis--){
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();
@@ -146,6 +130,7 @@ public class Bomb extends GameObject{
             }
         }
 
+        //Les cases en bas de la bombe
         for(int yAxis = position.y; yAxis < end_y; yAxis++){
             if (playerPosition.y==yAxis && playerPosition.x==position.x){
                 game.getPlayer().hurt();

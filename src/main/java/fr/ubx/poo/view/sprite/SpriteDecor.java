@@ -17,6 +17,8 @@ public class SpriteDecor extends Sprite {
         this.position = position;
     }
 
+    //On verifie si c'est une boite ou du sol, qui sont modifies assez souvent et si une des conditions et bonne
+    //on affiche l'image correspondante
     @Override
     public void updateImage() {
         if (isBox){

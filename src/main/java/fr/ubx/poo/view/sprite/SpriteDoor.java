@@ -17,6 +17,7 @@ public class SpriteDoor extends SpriteDecor {
         this.open = open;
     }
 
+    //On verifie si la porte est ouverte et on affiche l'image correspondate
     @Override
         public void updateImage() {
             openSpriteDoor();

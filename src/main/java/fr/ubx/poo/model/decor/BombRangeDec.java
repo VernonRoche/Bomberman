@@ -12,6 +12,7 @@ public class BombRangeDec extends Decor {
     @Override
     public boolean canExplode() { return true; }
 
+    //On diminue la portee des bombes et on efface le malus
     @Override
     public boolean take(Game game, Position nextPos){
         if(game.getPlayer().getRange_bomb() == 1)

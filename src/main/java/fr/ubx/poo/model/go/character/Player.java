@@ -16,16 +16,16 @@ import static fr.ubx.poo.game.WorldEntity.DoorNextClosed;
 
 public class Player extends GameObject implements Movable {
 
-    private final boolean alive = true;
+    private final boolean alive = true; //Est ce que le joueur est vivant
     Direction direction;
-    private boolean moveRequested = false;
-    private boolean bombRequested = false;
-    private int lives = 3;
-    private int nb_bomb = 15;
-    private int range_bomb = 3;
-    private int nb_key = 0;
-    private boolean winner;
-    private boolean is_hurt = false;
+    private boolean moveRequested = false; //Est ce que le joueur a fait une demande de mouvement
+    private boolean bombRequested = false; //Est ce que le joueur veut poser une bombe
+    private int lives = 3; //Nombre de vies courantes du joueur
+    private int nb_bomb = 1; //La taille de son sac de bombes
+    private int range_bomb = 1; //La portee des bombes
+    private int nb_key = 0; //Le nombre de cles que le joueur possede
+    private boolean winner; //Si le joueur a gagne
+    private boolean is_hurt = false; //Est ce que un monstre ou une bombe l'a endommage
 
     public Player(Game game, Position position) {
         super(game, position);
@@ -76,35 +76,36 @@ public class Player extends GameObject implements Movable {
         this.bombRequested=true;
     }
 
+    //On verifie si le joueur peut avancer sur une case, dependant de sa direction
     @Override
     public boolean canMove(Direction direction) {
         Position nextPos=direction.nextPosition(getPosition());
+        //On verifie si le joueur est dans les dimensions du monde
         if (!nextPos.inside(game.getCurrentWorld().dimension)){
             return false;
         }
-
-        //World map = game.getWorld();
         Decor decor = game.getCurrentWorld().get(nextPos);
-
+        //On verifie si le methode canWalk du Decor renvoie true, et si oui on le recupere a sa facon
         if (decor.canWalk()){
             return decor.take(game, nextPos);
         }
+        //Si le decor est une boite, on va la faire bouger avec moveBox
         if(decor.isBox()){
             return moveBox(nextPos);
         }
         return false;
-
     }
 
+    //Ici on fait la resolution du mouvement d'une case, vers la direction demandee
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
         setPosition(nextPos);
-
     }
 
+    //On place une bombe si on le sac n'est pas vide, et on ajoute cette bombe dans les bombes actives du monde
+    //courant
     public void placeBomb(Position position, long now){
         if (this.nb_bomb > 0) {
-            //System.out.println("PLACING BOMB");
             this.nb_bomb = this.nb_bomb - 1;
             game.getCurrentWorld().addBombWorld(new Bomb(game,getPosition(),getRange_bomb(), now));
         }
@@ -119,6 +120,8 @@ public class Player extends GameObject implements Movable {
         this.bombRequested=bool;
     }
 
+    //On verifie si on a fait une demande de mouvement, si oui on resout ce mouvement apres verification de sa validite
+    //et ensuite on verifie si le joueur veut poser une bombe
     public void update(long now) {
         if (moveRequested) {
             if (canMove(direction)) {
@@ -142,25 +145,31 @@ public class Player extends GameObject implements Movable {
         return alive;
     }
 
+    //On verifie si on peut bouger une boite vers la position qu'on veut
     public boolean canMoveBox(Position position){
         Decor decor=game.getCurrentWorld().get(position);
-
         List<Monster> monster;
         monster = game.getCurrentWorld().getMonsterList();
+        //Si un monstre se trouve a la position qu'on veut, la boite ne peut pas bouger
         for(Monster mons: monster){
             if(mons.getPosition().x == position.x && mons.getPosition().y == position.y){
                 return false;
             }
         }
-
+        //Si c'est du sol, alors dans cette condition seuleument elle peut bouger
         if (decor instanceof Floor){
             return true;
         }
+        //Sinon on peut pas
         return false;
     }
 
+    //On resoud le mouvement de la boite, en fonction de la position ou on veut la faire avancer et de la direction
+    //du joueur
     public boolean moveBox(Position nextPos){
         World map = game.getCurrentWorld();
+        //On verifie vers quelle direction on veut faire avancer la boite. Dans chaque cas, on va creer si possible
+        //une boite a la position ou on veut bouger une boite, et transformer l'ancienne boite en sol
         switch (getDirection()){
             case E:
                 Position creationPosE=new Position(nextPos.x+1, nextPos.y);
@@ -208,6 +217,7 @@ public class Player extends GameObject implements Movable {
         }
     }
 
+    //Ici on va endomager le joueur et lui enlever un point de vie, lui donnant une periode d'invincibilite
     public void hurt(){
         if(!is_hurt){
             setIs_hurt(true);
@@ -224,6 +234,7 @@ public class Player extends GameObject implements Movable {
         }
     }
 
+    //On ouvre une porte vers un niveau suivant fermee
     public void requestKey(){
         Position nextPos = direction.nextPosition(getPosition());
         World map = game.getCurrentWorld();
@@ -234,6 +245,8 @@ public class Player extends GameObject implements Movable {
         }
     }
 
+    //On va scanner tout le monde et en fonction de si on va a un niveau suivant ou precedent, on va teleporter le
+    //joueur a la porte ouverte correspondate
     public void movePlayerNextToDoor(Player player, Position position, int exitingLevelNumber){
         if (!position.inside(this.game.getCurrentWorld().dimension)){ }
         else{
@@ -249,9 +262,7 @@ public class Player extends GameObject implements Movable {
                     player.setPosition(position);
                 }
             }
-
         }
-
     }
 
 }

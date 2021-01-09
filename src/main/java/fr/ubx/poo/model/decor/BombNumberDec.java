@@ -12,6 +12,7 @@ public class BombNumberDec extends Decor {
     @Override
     public boolean canExplode() { return true; }
 
+    //On decremente la taille du sac des bombes et on efface le malus
     @Override
     public boolean take(Game game, Position nextPos){
         if(game.getPlayer().getNb_bomb() == 0)

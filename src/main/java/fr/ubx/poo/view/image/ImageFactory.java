@@ -58,10 +58,13 @@ public final class ImageFactory {
         return get(digits[i]);
     }
 
+    //On recupere l'image du joueur en fonction de sa direction
     public Image getPlayer(Direction direction) {
         return get(directions[direction.ordinal()]);
     }
 
+    //On recupere l'image de la bombe en fonction de combien de temps elle se trouve sur le monde. Ou pour faire plus
+    //simple en fonction de combien de temps il reste pour que le timer soit egal a 0
     public Image getBomb(long timePassed){
         if (timePassed==3){
             return get(BOMB1);
@@ -83,6 +86,7 @@ public final class ImageFactory {
         }
     }
 
+    //On recupere l'image du monstre en fonction de sa direction
     public Image getMonster(Direction direction) {
         return get(directionsMonster[direction.ordinal()]);
     }

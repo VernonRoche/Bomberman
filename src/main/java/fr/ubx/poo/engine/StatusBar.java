@@ -43,7 +43,7 @@ public class StatusBar {
         ds.setOffsetY(3.0);
         ds.setColor(Color.color(0.5f, 0.5f, 0.5f));
 
-
+        //On affiche la barre du bas, en ajoutant les images des coueurs, cles etc.
         HBox status = new HBox();
         status.getStyleClass().add("status");
         HBox live = statusGroup(ImageFactory.getInstance().get(HEART), this.liveValue);
@@ -80,6 +80,8 @@ public class StatusBar {
     }
 
     public void update(Game game) {
+        //On change le numero de niveau dependant du numero du monde courant (getCurrentLevel), et ensuite on
+        //affiche le nombre de vies, de portee des bombes, du nombre de bombes et du nombre de cles.
         updateLevel(game.getCurrentLevel());
         liveValue.setText(String.valueOf(game.getPlayer().getLives()));
         rangeValue.setText(String.valueOf(game.getPlayer().getRange_bomb()));

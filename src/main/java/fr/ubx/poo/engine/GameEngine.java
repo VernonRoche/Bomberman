@@ -40,8 +40,8 @@ public final class GameEngine {
     private Input input;
     private Stage stage;
     private Sprite spritePlayer;
-    private List<Sprite> spriteBombs= new ArrayList<>();
-    private List<Sprite> spriteMonsterList = new ArrayList<>();
+    private List<Sprite> spriteBombs= new ArrayList<>(); //liste qui contient les sprites des bombes
+    private List<Sprite> spriteMonsterList = new ArrayList<>(); //liste qui contient les sprites des monstres
 
     public GameEngine(final String windowTitle, Game game, final Stage stage) {
         this.windowTitle = windowTitle;
@@ -149,12 +149,8 @@ public final class GameEngine {
 
     private void update(long now) throws IOException {
         player.update(now);
-        /*for(Monster monster: game.getWorld().getMonsterList()){
-            if (monster.getLives()==0){
-                game.getWorld().getMonsterList().remove(monster);
-                spriteMonsterList.remove(monster);
-            }
-        }*/
+        //On regarde si un monstre est mort et on l'efface de la liste des monstres du monde courant et de la liste des
+        //sprites
         for(int x = 0; x<game.getCurrentWorld().getMonsterList().size(); x++){
             if (game.getCurrentWorld().getMonsterList().get(x).getLives()==0){
                 game.getCurrentWorld().getMonsterList().remove(game.getCurrentWorld().getMonsterList().get(x));
@@ -162,12 +158,15 @@ public final class GameEngine {
             }
         }
 
+        //On parcoure tout les mondes, pour recuperer tout les monstres et les faire bouger
         for(World world: game.getWorlds()){
             for(Monster monster: world.getMonsterList()){
                 monster.update(now, 1000);
             }
         }
 
+        //On verifie pour tout les monstres du monde courant si elles sont en train d'attaquer le joueur et on lui
+        //enleve un point de vie
         for(Monster monster: game.getCurrentWorld().getMonsterList()){
             if(player.getPosition().x == monster.getPosition().x && player.getPosition().y == monster.getPosition().y){
                 player.hurt();
@@ -181,8 +180,9 @@ public final class GameEngine {
 
             game.getCurrentWorld().update = false;
         }
+        //Si on a pose une bombe, on verifie quelques conditions
         if (game.getCurrentWorld().getPlacedBombs().isEmpty()==false){
-            //Ajouter les bombes manquantes dans les sprites
+            //Si on a place une bombe et le sprite n'est pas apparu, on l'ajoute dans la liste des sprites
             if(game.getCurrentWorld().getPlacedBombs().size()!=spriteBombs.size()){
                 for(int x = spriteBombs.size(); x<game.getCurrentWorld().getPlacedBombs().size(); x++){
                         spriteBombs.add(SpriteFactory.createBombSprite(layer,game.getCurrentWorld().getPlacedBombs().get(x)));
@@ -190,20 +190,19 @@ public final class GameEngine {
             }
             //Resolution du timer des bombes
             for(int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
-                //Explosion de bombe si now-le vieu now est egal au timer
+                //Explosion de bombe si now moins le vieu now est egal au timer
                 if(game.getCurrentWorld().getPlacedBombs().get(x).getTimePassed()>=game.getCurrentWorld().getPlacedBombs().get(x).getBombTimer()){
                     game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
                     game.getCurrentWorld().getPlacedBombs().remove(x);
                     spriteBombs.remove(x);
                     game.getPlayer().setNb_bomb(game.getPlayer().getNb_bomb() + 1);
-                    //System.out.println(spriteBombs);
                 }
                 else{
                     game.getCurrentWorld().getPlacedBombs().get(x).setTimePassed(now/(1000000000)-game.getCurrentWorld().getPlacedBombs().get(x).getTimePlaced());
                 }
             }
         }
-        //Supprimer les bombes qui en font exploser d'autres
+        //On verifie si une bombe en fait exploser une autre, et on la fait exploser ensuite
         for (int x = 0; x<game.getCurrentWorld().getPlacedBombs().size(); x++){
             if(game.getCurrentWorld().getPlacedBombs().get(x).getLives() == 0){
                 game.getCurrentWorld().getPlacedBombs().get(x).bombExplode(game.getCurrentWorld().getPlacedBombs().get(x).getPosition());
@@ -216,7 +215,8 @@ public final class GameEngine {
         //on change de niveau
         if (game.hasRequestedLevelChange){
             int exitingLevelNumber=game.getCurrentWorld().getLevelNumber();
-            if (game.getCurrentLevel()<game.getCurrentWorld().getLevelNumber()){//on retourne en arriere
+            //Si la condition est vraie, on retourne au niveau precedent
+            if (game.getCurrentLevel()<game.getCurrentWorld().getLevelNumber()){
                 System.out.println("IM GETTING BACK");
                 for (World world: game.getWorlds()){
                     if (world.getLevelNumber()==game.getCurrentLevel()){
@@ -227,11 +227,15 @@ public final class GameEngine {
                 }
 
             }
-            else{ //on va au niveau suivant
-                if (game.numberOfWorlds<game.getCurrentLevel()){} //on verifie si on depasse le nombre de mondes max
+            //Sinon on va au niveau suivant
+            else{
+                //on verifie si on depasse le nombre de mondes max
+                if (game.numberOfWorlds<game.getCurrentLevel()){}
                 else{
                     Boolean undiscoveredWorld=true;
-                    for (World world: game.getWorlds()){ //on verifie si on a deja explore ce monde
+                    //On verifie si on a deja explore ce monde et on le charge comme monde courant, et ensuite on
+                    //l'affiche avec showNextLevel
+                    for (World world: game.getWorlds()){
                         if (game.getCurrentLevel()==world.getLevelNumber()){
                             undiscoveredWorld=false;
                             game.setCurrentWorld(world);
@@ -240,9 +244,9 @@ public final class GameEngine {
                             break;
                         }
                     }
+                    //Si on est jamais venu dans ce monde, on l'ajoute dans la liste des mondes et on l'affiche
                     if (undiscoveredWorld){
                         game.setCurrentWorld(new World(game.loadWorldFromFile(game.getCurrentLevel(), game.getWorldPath()), game, game.getCurrentLevel()));
-                        //game.getCurrentWorld().setLevelNumber(game.getCurrentLevel());
                         game.getWorlds().add(game.getCurrentWorld());
                         showNextLevel(new Stage(), this.game, exitingLevelNumber);
                         game.hasRequestedLevelChange=false;
@@ -251,17 +255,21 @@ public final class GameEngine {
             }
         }
 
+        //On verifie si le joueur est mort (Points de vie=0)
         if (player.isAlive() == false) {
             gameLoop.stop();
             showMessage("Perdu!", Color.RED);
         }
+        //On verifie si on a gagne et on affiche un message (quand on marche sur la princesse)
         if (player.isWinner()) {
             gameLoop.stop();
             showMessage("Gagné", Color.BLUE);
         }
     }
 
+    //Ici on change de stage, et on affiche une nouvelle fenetre, dependant du world courant
     private void showNextLevel(Stage stage, Game game, int exitingLevelNumber){
+        //On efface les elements des listes des sprites, on ferme le stage et on ouvre un autre
         this.stage.close();
         this.stage=stage;
         this.spriteBombs.clear();
@@ -277,6 +285,7 @@ public final class GameEngine {
 
         Scene scene = new Scene(root, sceneWidth, sceneHeight + StatusBar.height);
         scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
+        //On change la couleur de fond
         scene.setFill(Color.web("#DEB887"));
 
         stage.setTitle(windowTitle);
@@ -284,12 +293,13 @@ public final class GameEngine {
         stage.setResizable(false);
         stage.show();
 
+        //On ajoute tout les elements de sprites
         input = new Input(scene);
         root.getChildren().add(layer);
         statusBar = new StatusBar(root, sceneWidth, sceneHeight, game);
         // Create decor sprites
         game.getCurrentWorld().forEach( (pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
-        // Bouger le joueur a cote de la porte ouverte
+        // Bouger le joueur a cote de la porte ouverte, dependant si on va a un niveau precedent ou suivant
         game.getCurrentWorld().forEach( ((position, decor) -> game.getPlayer().movePlayerNextToDoor(player, position, exitingLevelNumber)));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
         for(Monster monster: game.getCurrentWorld().getMonsterList())
@@ -297,7 +307,7 @@ public final class GameEngine {
     }
 
 
-
+    //On affiche d'abord les decors, puis les bombes, suivi des monstres et du joueur
     private void render() {
         sprites.forEach(Sprite::render);
         spriteBombs.forEach(Sprite::render);

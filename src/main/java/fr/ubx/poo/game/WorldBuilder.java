@@ -24,6 +24,7 @@ public class WorldBuilder {
         return builder.grid;
     }
 
+    //On converti des WorldEntity en Decor. Souvent on utilise ca avec un tableau a 2 dimensions de WorldEntity
     private static Decor processEntity(WorldEntity entity) {
         if (entity==null)
             return null;
@@ -55,9 +56,6 @@ public class WorldBuilder {
                 return new DoorNextOpened();
             case DoorPrevOpened:
                 return new DoorPrevOpened();
-            /*case Empty:
-                return new Floor();*/
-
             default:
                 return new Floor();
         }

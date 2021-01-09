@@ -13,6 +13,8 @@ public class DoorPrevOpened extends Decor {
     @Override
     public boolean canExplode(){ return false; }
 
+    //La porte est ouverte, donc ca methode take va actualiser le numero du monde courant et on va demander
+    //un changement de niveau
     @Override
     public boolean take(Game game, Position nextPos){
         game.setCurrentLevel(game.getCurrentLevel()-1);

@@ -12,6 +12,7 @@ public class Heart extends Decor{
     @Override
     public boolean canExplode() { return true; }
 
+    //On augmente les points de vies du joueur et on efface le bonus
     @Override
     public boolean take(Game game, Position nextPos){
         game.getCurrentWorld().clear(nextPos);

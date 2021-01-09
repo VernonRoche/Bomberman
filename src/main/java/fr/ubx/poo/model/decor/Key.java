@@ -9,6 +9,7 @@ public class Key extends Decor{
         return "Key";
     }
 
+    //On augmente le nombre de cles courantes et on efface le bonus
     @Override
     public boolean take(Game game, Position nextPos){
         game.getCurrentWorld().clear(nextPos);

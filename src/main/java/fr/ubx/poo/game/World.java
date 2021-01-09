@@ -20,9 +20,9 @@ public class World {
     private final WorldEntity[][] raw;
     public final Dimension dimension;
     public boolean update = false; //
-    private List<Bomb> placedBombs=new ArrayList<>();
-    private List<Monster> monsterList=new ArrayList<>();
-    private int levelNumber;
+    private List<Bomb> placedBombs=new ArrayList<>(); //Listes des bombes placees
+    private List<Monster> monsterList=new ArrayList<>(); //Liste des monstres vivants dans le monde
+    private int levelNumber; //Numero de monde/level
 
     public World(WorldEntity[][] raw, Game game, int levelNumber) {
         this.raw = raw;
@@ -31,6 +31,7 @@ public class World {
         grid = WorldBuilder.build(raw, dimension);
         List<Position> positionMonster = new ArrayList<>();
         try {
+            //On cree tout les monstres
             positionMonster = findMonster();
             for(Position pos : positionMonster)
                 getMonsterList().add(new Monster(game, pos, levelNumber));
@@ -67,7 +68,7 @@ public class World {
         if(!positions.isEmpty()) return positions;
         throw new PositionNotFoundException("Monster");
     }
-
+    //On recupere le Decor dans la position donnee
     public Decor get(Position position) {
         return grid.get(position);
     }
@@ -99,14 +100,17 @@ public class World {
         return grid.get(position) == null;
     }
 
+    //On ajoute une bombe dans les bombes actives du monde
     public void addBombWorld(Bomb bomb){
         placedBombs.add(bomb);
     }
 
+    //On retourne les bombes placees dans le monde
     public List<Bomb> getPlacedBombs(){
         return placedBombs;
     }
 
+    //On retourne la liste des monstres vivants du monde
     public List<Monster> getMonsterList(){
         return monsterList;
     }
